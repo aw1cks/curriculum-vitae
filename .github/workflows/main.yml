@@ -6,9 +6,11 @@ on:
   push:
     paths:
       - cv.tex
+      - developercv.cls
   pull_request:
     paths:
       - cv.tex
+      - developercv.cls
   workflow_dispatch:
 
 jobs:
