@@ -129,7 +129,7 @@
 		
 		\filldraw[fill=black, draw=none] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
 		
-		\node [label=180:\colorbox{black}{\textcolor{white}{##1}}] at (0,-\barx-0.175) {};
+		\node [label=180:\colorbox{black}{\texttt{\textcolor{white}{##1}}}] at (0,-\barx-0.175) {};
 		\addtocounter{barcount}{1}
 	}
 	\begin{tikzpicture}
