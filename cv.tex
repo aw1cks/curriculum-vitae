@@ -20,7 +20,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[9pt]{developercv} % Default font size, values from 8-12pt are recommended
+\documentclass[10pt]{developercv} % Default font size, values from 8-12pt are recommended
 
 %----------------------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@
 	\icon{Globe}{12}{\href{https://awicks.io}{awicks.io}}\\	
 \end{minipage}
 
-\vspace{0.5cm}
+\vspace{0.4cm}
 
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION, SKILLS AND TECHNOLOGIES
@@ -83,9 +83,8 @@
 	\end{barchart}
 \end{minipage}
 
-%\begin{center}
-%	\bubbles{5/Eclipse, 6/git, 4/Office, 3/Inkscape, 3/Blender}
-%\end{center}
+\iffalse
+\vspace{\baselineskip}
 \cvsect{Achievements}
 
 \begin{minipage}[t]{0.5\textwidth}
@@ -100,6 +99,7 @@
   \item VMware private cloud in AWS implementation
 \end{itemize}
 \end{minipage}
+\fi
 
 \vspace{0.5cm}
 %----------------------------------------------------------------------------------------
@@ -109,18 +109,23 @@
 \cvsect{Experience}
 
 \begin{entrylist}
+  \entry
+    {Jul. '21 - Now}
+    {Platform Engineer}
+    {CapGemini - HMRC Market Unit}
+    {Platform monitoring in a cloud-native (AWS) environment. Large-scale Prometheus monitoring (10,000s of pods), Thanos aggregation, Alertmanager, Kubernetes \linebreak integrations. Helm, Terraform deployments. Packer for building immutable \linebreak infrastucture. Consul, consul-template for service discovery/configuration.\\ \texttt{AWS}\slashsep\texttt{Prometheus}\slashsep\texttt{Terraform}\slashsep\texttt{Helm}}
 	\entry
-		{Sept. 2020 -- Now}
+		{Sep. '20 -- Jun. '21}
 		{DevOps Engineer}
 		{Flextrade Systems}
-    {Cross-functional working, unifying operations \& development teams, primarily working on automation \& build environments. In-house automation tooling (Python), Ansible. Continuous delivery. DevOps evangelism. AWS EC2, Route53. VMware Cloud on AWS. Bare-metal Kubernetes on-premises architecture, deployment, maintenance (rook-ceph, MetalLB...), PXE deployment to bare-metal. Jenkins Pipelines as code (groovy), GitLab CI. Docker, podman, CRI-O. Telegraf, Prometheus, Grafana. Packer.\\ \texttt{Ansible}\slashsep\texttt{Jenkins}\slashsep\texttt{Kubernetes}\slashsep\texttt{Continuous Delivery}}
+    {Cross-functional working, unifying operations \& development teams, primarily working on automation \& build environments. In-house automation tooling (Python), \linebreak Ansible. Continuous delivery. AWS EC2, Route53. VMware Cloud on AWS. Bare-metal \linebreak Kubernetes on-premises (PXE). Jenkins Pipelines as code (groovy), GitLab CI. \linebreak Containerisation (docker). Metrics-based monitoring (Prometheus, Grafana). Infrastucture-as-code (Packer).\\ \texttt{Ansible}\slashsep\texttt{Jenkins}\slashsep\texttt{Kubernetes}\slashsep\texttt{Continuous Delivery}}
 	\entry
-		{2019 -- Aug. 2020}
+		{2019 -- Aug. '20}
 		{Systems Administrator}
 		{Flextrade Systems}
-    {Operations in a SaaS environment. Supporting over 1,000 Linux servers. Citrix, VDI, Active Directory, LDAP. Firewalls, L2 switching, iptables, tcpdump, mitmdump, TLS troubleshooting. HAProxy \& nginx. PostgreSQL, MongoDB. Nagios. Jira, Agile methodology (sprint, kanban).\\ \texttt{Puppet}\slashsep\texttt{VMware}\slashsep\texttt{Cisco ASA, IOS}\slashsep\texttt{RHEL, CentOS}\slashsep\texttt{Ticket Triage}}
+    {Operations in a SaaS environment. Supporting 1,000s of Linux VMs. Citrix, VDI, \linebreak Active Directory, LDAP. Firewalls, L2 switching, iptables, tcpdump, mitmdump, \linebreak TLS troubleshooting. HAProxy \& nginx. PostgreSQL, MongoDB. Nagios. Jira, Agile methodology (sprint, kanban).\\ \texttt{Puppet}\slashsep\texttt{VMware}\slashsep\texttt{Cisco ASA, IOS}\slashsep\texttt{RHEL, CentOS}\slashsep\texttt{Ticket Triage}}
 	\entry
-		{Aug 2017 -- 2018}
+		{Aug '17 -- 2018}
 		{Junior Systems Administrator}
 		{Vyper Networks}
     {First line desktop support. On-premises customer visits. Linux web \& mail server administration.\\ \texttt{nginx}\slashsep\texttt{postfix}\slashsep\texttt{CentOS}\slashsep\texttt{Desktop Support}}
@@ -134,7 +139,7 @@
 
 \begin{entrylist}
 	\entry
-		{Sept. 2018}
+		{Sep. 2018}
 		{Red Hat Certified System Administrator}
 		{Certification ID 180-199-853}
     {}
@@ -166,16 +171,11 @@
 	
 	\cvsect{Hobbies}
 	
-	I enjoy tinkering in my home lab.
-  I'm a massive petrolhead and am interested in anything with a combustion engine.
-  I like to cycle at the weekends.
-  I am also an avid photographer.
+	I enjoy tinkering in my home lab. I'm a massive \linebreak petrolhead and am interested in anything with a \linebreak combustion engine. I like to cycle at the weekends. I am also an avid photographer.
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.5\textwidth}
 	\vspace{-\baselineskip} % Required for vertically aligning minipages
-	
-%	I help... \lorem
 \end{minipage}
 
 %----------------------------------------------------------------------------------------
