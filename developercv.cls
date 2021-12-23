@@ -82,7 +82,7 @@
 
 % Command to output an icon in a black square box with text to the right
 \newcommand{\icon}[3]{% The first parameter is the FontAwesome icon name, the second is the box size and the third is the text
-	\vcenteredhbox{\colorbox{black}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}% Icon and box
+	\vcenteredhbox{\colorbox{navyblue}{\makebox(#2, #2){\textcolor{white}{\large\csname fa#1\endcsname}}}}% Icon and box
 	\hspace{0.2cm}% Whitespace
 	\vcenteredhbox{\textcolor{black}{#3}}% Text
 }
@@ -165,13 +165,26 @@
 }
 
 %----------------------------------------------------------------------------------------
+% COLORS
+%---------------------------------------------------------------------------------------- 
+
+\definecolor{darkblue}{HTML}{3D5A80}
+\definecolor{mediumblue}{HTML}{98c1d9}
+\definecolor{paleblue}{HTML}{e0fbfc}
+\definecolor{navyblue}{HTML}{293241}
+
+\definecolor{accent}{HTML}{98c1d9}
+
+%----------------------------------------------------------------------------------------
 %	CUSTOM SECTIONS
 %----------------------------------------------------------------------------------------
 
 % Command to output section title headings
 \newcommand{\cvsect}[1]{% The only parameter is the section text
 	%\vspace{\baselineskip} % Whitespace before the section title
-	\colorbox{black}{\textcolor{white}{\MakeUppercase{\textbf{#1}}}}\\% Section title
+  \textcolor{accent}{\MakeUppercase{\textbf{#1}}}
+  \vspace{\baselineskip}
+	%\colorbox{black}{\textcolor{white}{\MakeUppercase{\textbf{#1}}}}\\% Section title
 }
 
 %----------------------------------------------------------------------------------------
@@ -191,16 +204,29 @@
 	\end{longtable}
 }
 
-\newcommand{\entry}[4]{% First argument for the leftmost date(s) text, second is for the bold entry heading, third is for the bold right-aligned entry qualifier and the fourth is for the entry description
-	\parbox[t]{0.18\textwidth}{% 18% of the text width of the page
-		#1 % Leftmost entry date(s) text
-	}%
-	&\parbox[t]{0.82\textwidth}{% 82% of the text width of the page
-		{\footnotesize \textbf{\textcolor{black}{#2}}}% Right-aligned entry qualifier text
-		\hfill% Horizontal whitespace
-		\textbf{#3}\\% Entry heading text
-		#4 % Entry description text
-	}\\\\}
+\newcommand{\dateentry}[2]{
+  #1
+   --\\
+  #2
+}
+
+\newcommand{\entry}[4]{
+	\parbox[t]{0.18\textwidth}{
+    \footnotesize{#1}
+	}
+  %
+	&\parbox[t]{0.82\textwidth}{
+		{\footnotesize\textbf{\textcolor{black}{#2}}}
+    %
+		\hfill\small\textbf{#3}\\
+    %
+    \normalsize{#4}
+	}\\\\
+}
 
 % Command to output a separator slash between lists, e.g. '  /  '
-\newcommand{\slashsep}{\hspace{3mm}/\hspace{3mm}}
+\newcommand{\slashsep}{
+  \hspace{3mm}
+  /
+  \hspace{3mm}
+}
