@@ -1,0 +1,11 @@
+html, body {
+  background-color: #2e2e2e;
+  padding: 0px;
+  overflow: hidden;
+}
+
+object, iframe {
+  min-height: 100vh;
+  padding: 0px;
+  width: 100%;
+}
