@@ -36,8 +36,6 @@
 
 \usepackage[hidelinks]{hyperref} % Required for links but hide the default boxes around links
 
-\newcommand{\lorem}{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus.} % Dummy text
-
 \pagestyle{empty} % No headers or footers
 
 \usepackage{moresize} % Provides more font size commands (\HUGE and \ssmall)
@@ -103,68 +101,6 @@
 }
 
 %----------------------------------------------------------------------------------------
-%	CHARTS
-%---------------------------------------------------------------------------------------- 
-
-\newcounter{barcount}
-
-% Environment to hold a new bar chart
-\newenvironment{barchart}[1]{ % The only parameter is the maximum bar width, in cm
-	\newcommand{\barwidth}{0.35}
-	\newcommand{\barsep}{0.2}
-	
-	% Command to add a bar to the bar chart
-	\newcommand{\baritem}[2]{ % The first argument is the bar label and the second is the percentage the current bar should take up of the total width
-		\pgfmathparse{##2}
-		\let\perc\pgfmathresult
-		
-		\pgfmathparse{#1}
-		\let\barsize\pgfmathresult
-		
-		\pgfmathparse{\barsize*##2/100}
-		\let\barone\pgfmathresult
-		
-		\pgfmathparse{(\barwidth*\thebarcount)+(\barsep*\thebarcount)}
-		\let\barx\pgfmathresult
-		
-		\filldraw[fill=black, draw=none] (0,-\barx) rectangle (\barone,-\barx-\barwidth);
-		
-		\node [label=180:\colorbox{black}{\texttt{\textcolor{white}{##1}}}] at (0,-\barx-0.175) {};
-		\addtocounter{barcount}{1}
-	}
-	\begin{tikzpicture}
-		\setcounter{barcount}{0}
-}{
-	\end{tikzpicture}
-}
-
-%------------------------------------------------
-
-\newcounter{a}
-\newcounter{b}
-\newcounter{c}
-
-% Command to output a number of automatically-sized bubbles from a string in the format of '<size>/<label>', e.g. \bubbles{5/Eclipse, 6/git, 4/Office, 3/Inkscape, 3/Blender}
-\newcommand{\bubbles}[1]{
-	% Reset counters
-	\setcounter{a}{0}
-	\setcounter{c}{150}
-	
-	\begin{tikzpicture}[scale=3]
-		\foreach \p/\t in {#1} {
-			\addtocounter{a}{1}
-			\bubble{\thea/2}{\theb}{\p/25}{\t}{1\p0}
-		}
-	\end{tikzpicture}
-}
-
-% Command to output a bubble at a specific position with a specific size
-\newcommand{\bubble}[5]{
-	\filldraw[fill=black, draw=none] (#1,0.5) circle (#3); % Bubble
-	\node[label=\textcolor{black}{#4}] at (#1,0.7) {}; % Label
-}
-
-%----------------------------------------------------------------------------------------
 % COLORS
 %---------------------------------------------------------------------------------------- 
 
@@ -211,22 +147,15 @@
 }
 
 \newcommand{\entry}[4]{
-	\parbox[t]{0.18\textwidth}{
+	\parbox[t]{0.20\textwidth}{
     \footnotesize{#1}
 	}
   %
-	&\parbox[t]{0.82\textwidth}{
-		{\footnotesize\textbf{\textcolor{black}{#2}}}
+	&\parbox[t]{0.80\textwidth}{
+		{\normalsize\textbf{\textcolor{black}{#2}}}
     %
 		\hfill\small\textbf{#3}\\
     %
     \normalsize{#4}
 	}\\\\
-}
-
-% Command to output a separator slash between lists, e.g. '  /  '
-\newcommand{\slashsep}{
-  \hspace{3mm}
-  /
-  \hspace{3mm}
 }
