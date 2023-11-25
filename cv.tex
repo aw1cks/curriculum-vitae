@@ -1,202 +1,87 @@
-% vim: et ts=4 sw=4
-% Based on Developer CV LaTeX Template
-% http://www.LaTeXTemplates.com
-% Authors:
-% Jan Vorisek (jan@vorisek.me)
-% Based on a template by Jan Küster (info@jankuester.com)
-% Modified for LaTeX Templates by Vel (vel@LaTeXTemplates.com)
-
-\documentclass[9pt]{developercv}
-\tolerance=9999
-\emergencystretch=10pt
-\hyphenpenalty=10000
-\exhyphenpenalty=100
+\documentclass{cv}
 \begin{document}
+  \cvHeading{Alex Wicks}{
+    \contacts{
+      \contactEntry{location-arrow}{East Anglia, GB}
+      \contactEntry{github}{\href{https://github.com/aw1cks}{aw1cks}}
+      \contactEntry{at}{\href{mailto:alex+cv@awicks.io}{alex+cv@awicks.io}}
+      \contactEntry{phone}{\href{tel:+447484616643}{+44 7484 6166 43}}
+    }
+  }
 
-    \begin{minipage}[t]{0.62\textwidth}
-        \vspace{-\baselineskip}
-        \vspace{10pt}
-        \color{gray}\HUGE{Alex}
-        \color{navyblue}\HUGE{\textbf{Wicks}}
-    \end{minipage}
-    %%
-    %%
-    \begin{minipage}[t]{0.225\textwidth}
-        \vspace{-\baselineskip}
-        \icon{MapMarker}{12}{London, UK}
+  \cvSection{About Me}
 
-        \icon{Phone}{12}{+44 7484 6166 43}
+  \cvParagraph{
+    I have a breadth of IT experience, with over 6 years of varied industry experience,
+    and a keen personal interest since childhood, having built my first PC at the age of 5.
+    I have worked across cloud \& on-premises environments and feel comfortable in either.
+    I have extensive experience with Linux, having used it for over 10 years and completed a
+    \accentText{Red Hat RHCSA} certification (ID 180-199-853).
+    I enjoy automation and reducing toil - I don't like solving the same problem twice. This ranges
+    from scripting, programming in Python and Go, using GitOps, to tools such as Terraform \& Ansible.
+    I have worked in Agile/Scrum environments, as well as in cross-functional teams. I am capable of taking
+    initiative to plan, drive and deliver projects, either working autonomously or with others.
+  }
 
-        \icon{At}{12}{\href{mailto:alex@awicks.io}{alex@awicks.io}}
-    \end{minipage}
-    %%
-    %%
-    \begin{minipage}[t]{0.15\textwidth} % 27.5% of the page width for the second row of icons
-        \vspace{-\baselineskip}
-        \icon{Globe}{12}{\href{https://awicks.io}{awicks.io}}
+  \cvSection{Experience}
 
-        \icon{Github}{12}{\href{https://github.com/aw1cks}{aw1cks}}
-    \end{minipage}
-    \vspace{0.4cm}
+  \cvCompany{Speechmatics}{
+    \cvJob{Sr. Site Reliability Engineer}{\cvDateRange{Jan. 2023}{Present}}{
+      In addition to previous responsiblities -
+      \accentText{primary technical contact} for all on-premises resources (networking, VMware, SAN, etc).
+      Setup of high-performance bare-metal GPU clusters (NVidia H100 \& A100).
+      Leading best practices in our Kubernetes environments - e.g. implementing a \accentText{GitOps CI/CD} workflow
+      using GitLab CI and \accentText{ArgoCD}, which \accentText{reduced deployment time} across our environments
+      from \accentText{days} to \accentText{hours} as well as adding extra quality checks.
+    }
+    \cvJob{Site Reliability Engineer}{\cvDateRange{Jan. 2022}{Jan. 2023}}{
+      Working in a hybrid-cloud environment spanning \accentText{Azure} \& colocated datacentre.
+      Infrastructure deployments using \accentText{GitLab CI}, \accentText{Terraform},
+      \accentText{Ansible} \& \accentText{cloud-init}. Involvement with production SaaS environment running in Azure:
+      platform setup, incident response, maintenance. Monitoring and incident management
+      using Datadog, Prometheus, Grafana \& OpsGenie. Planned and executed a datacentre migration to a new colocation.
+      Extensive use of Azure AD, AKS, PostgreSQL Flexible Server, Azure File Storage, Front Door \& Event Hubs amongst others.
+    }
+  }
 
+  \cvCompany[HMRC Market Unit]{Capgemini}{
+    \cvJob{Platform Engineer}{\cvDateRange{Jul. 2021}{Dec. 2021}}{
+      Platform monitoring in a cloud-native (\accentText{AWS}) environment - \accentText{K8S} \& legacy EC2. \accentText{Prometheus}
+      monitoring across thousands of nodes, aggregation \& long-term retention across all clusters using \accentText{Thanos}.
+      Implementation of blackbox monitoring system for crucial platform services e.g. \accentText{Consul}, \accentText{Vault}
+      - monitoring breaches of SLAs for these services. Migration of monitoring services from legacy EC2 stack into K8S.
+      Deployments using \accentText{Packer}, \accentText{Terraform}, \accentText{cloud-init}, \accentText{Ansible}.
+      Extensive use of EC2, EKS, S3, ELB, ALB \& RDS amongst others.
+    }
+  }
 
-
-    \cvsect{About Me}
-
-    \begin{minipage}[t]{1\textwidth}
-        \vspace{-\baselineskip}
-        Skilled \& dedicated IT professional with a keen personal interest in technology since early childhood.
-        I have a diverse range of experience across on-premises \& cloud environments.
-        I'm seeking a challenging role where I can leverage my expertise in optimising system performance,
-        implementing automation solutions, and ensuring high availability and scalability of critical applications,
-        while learning new things along the way.
-    \end{minipage}
-
-    \vspace{0.5cm}
-
-
-
-    \cvsect{Experience}
-
-    \begin{entrylist}
-        \entry
-            {\dateentry
-                {January 2022}
-                {Present}
-            }
-            {Speechmatics}
-            {Senior Site Reliability Engineer}
-            {
-                Operations in a hybrid cloud environment (Azure, self-hosted colocation).
-                Deployment of on-premises NVidia A100 GPU cluster for high-performance ML training.
-                Migration to new colocation premises due to cooling \& power requirements for new GPU cluster.
-                Day-to-day ops of Azure SaaS environment such as release engineering and incident response.
-                Improvements to hybrid-cloud networking, optimising engineer workflows.
-                Embedding in other teams, assisting with infrastrcture requirements.
-            }
-        %%
-        \entry
-            {\dateentry
-                {July 2021}
-                {December 2021}
-            }
-            {CapGemini (HMRC Market Unit)}
-            {Platform Engineer}
-            {
-                Platform monitoring in a cloud-native (AWS) environment. K8S \& legacy EC2.
-                Prometheus monitoring across thousands of nodes, aggregation across all clusters using Thanos.
-                Long-term metric retention (with reduced resolution) for compliance requirements.
-                Implementation of blackbox monitoring system for crucial platform services e.g. Consul, Vault.
-                Alertmanager \& Slack to notify when platform services breach SLAs, enabling swift incident response.
-                Migration of monitoring services from legacy EC2 stack into K8S.
-            }
-        %%
-        \entry
-            {\dateentry
-                {September 2020}
-                {June 2021}
-            }
-            {Flextrade Systems}
-            {DevOps Engineer}
-            {
-                Implement PXE automation for bare-metal K8S deployment.
-                Migrate build environment to bare-metal K8S cluster, improving build times by 35\%.
-                Implement modern monitoring stack (Prometheus, Alertmanager, Grafana) for build environments.
-                Lead cross-functional initative for application deployment automation, reducing customer service engineer toil.
-            }
-        %%
-        \entry
-            {\dateentry
-                {January 2020}
-                {August 2020}
-            }
-            {}
-            {Systems Administrator}
-            {
-                Mentoring \& training junior engineers to complete BAU tasks.
-                Leading end-to-end VM deployment automation framework, reducing BAU toil for junior engineers.
-            }
-        %%
-        \entry
-            {\dateentry
-                {March 2019}
-                {August 2020}
-            }
-            {}
-            {Junior Systems Administrator}
-            {
-                Operations \& incident response in complex on-premises SaaS environment,
-                including participation in an on-call rota. Multiple geograpraphies spanning EMEA, APAC and AMER.
-                Linux \& Windows systems administration and config management.
-                Network tasks \& troubleshooting -
-                firewall configuration, layer 2 switching, basic routing,
-                packet capture analysis (tcpdump, mitmdump, wireshark), TCP \& TLS troubleshooting.
-                VMware and bare-metal hardware management. Storage administration (SANs, backup servers).
-            }
-        %%
-        \entry
-            {\dateentry
-                {August 2017}
-                {February 2019}
-            }
-            {Vyper Networks}
-            {Junior Systems Administrator}
-            {
-                First line desktop support.
-                On-premises customer visits.
-                Linux web \& mail server administration.
-            }
-    \end{entrylist}
-
-
-
-    \cvsect{Education}
-
-    \begin{entrylist}
-      \entry
-        {2018}
-        {Certification ID 180-199-853}
-        {Red Hat Certified System Administrator}
-        {}
-      %%
-      \entry
-        {2015 -- 2017}
-        {Northgate Sixth Form}
-        {A Levels}
-        {Mathematics, Physics, Computer Science}
-    \end{entrylist}
-
-
-
-%%    \begin{minipage}[t]{0.33\textwidth}
-%%      \cvsect{Languages}
-%%
-%%
-%%      \textbf{English} - Native
-%%
-%%      \textbf{Polish} - Proficient
-%%
-%%      \textbf{German} - Proficient
-%%
-%%      \textbf{French} - Beginner
-%%
-%%      \textbf{Russian} - Beginner
-%%    \end{minipage}
-%%    %%
-%%    %%
-%%    \begin{minipage}[t]{0.7\textwidth}
-%%      \cvsect{Hobbies}
-%%
-%%
-%%      \textbf{Home lab} - I enjoy creating labs to learn new tech on my own hardware
-%%
-%%      \textbf{Cars} - Wrenching on my old Mercedes, watching motorsports
-%%
-%%      \textbf{Cycling} - Lovely to go for a ride at the weekend
-%%
-%%      \textbf{Photography} - Love to capture some nature
-%%
-%%      \textbf{Cooking} - Food is a great gateway into different cultures
-%%    \end{minipage}
+  \cvCompany{Flextrade}{
+    \cvJob{DevOps Engineer}{\cvDateRange{Aug. 2020}{Jul. 2021}}{
+      Create bare-metal k8s deployment using \accentText{PXE automation}.
+      Migrate CI/CD to new k8s deployment, \accentText{reducing build times by 40\%}.
+      Pilot \accentText{hybrid-cloud} bursting workloads into \accentText{AWS}.
+      Lead cross-functional initiative for \accentText{continuous delivery} framework.
+    }
+    \cvJob{Systems Administrator}{\cvDateRange{Jan. 2020}{Aug. 2020}}{
+      In addition to previous responsiblities -
+      Mentoring \& training junior engineers to complete BAU tasks.
+      Implementing \accentText{automation framework} for deploying VMs from helpdesk tickets.
+      Other automations \& custom tooling (\accentText{Python}) to reduce toil.
+    }
+    \cvJob{Jr. Systems Administrator}{\cvDateRange{Mar. 2019}{Jan. 2020}}{
+      Operations \& incident response in an on-premises, multi-tenant SaaS environment, spanning multiple geolocations.
+      Linux administration \& config management: \accentText{RHEL}, \accentText{Puppet}, \accentText{Ansible} etc.
+      - bare-metal \& virtualised.
+      Hypervisor administration: \accentText{VMware} ESXi \& vSphere.
+      Storage administration: \accentText{iSCSI} SANs, \accentText{NFS} file servers.
+      Database administration: \accentText{PostgreSQL} HA clusters, \accentText{MariaDB/MySQL}.
+      Windows administration: \accentText{DHCP}, \accentText{DNS}, \accentText{Active Directory}, Citrix, etc.
+      Network administration: Cisco \accentText{ASA firewall \& VPN}, nginx \& HAProxy \accentText{load balancers},
+      \accentText{Layer 2 switching}, TLS, packet capture troubleshooting \& analysis (tcpdump, wireshark, mitmdump).
+    }
+  }
+  \begin{center}
+    \textcolor{fg}{\footnotesize{Further history available upon request}}
+  \end{center}
 
 \end{document}
