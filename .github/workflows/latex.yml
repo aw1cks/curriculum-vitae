@@ -12,14 +12,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build custom container
+        uses: docker/build-push-action@v5
         with:
-          fetch-depth: 1
-      - name: Build
-        uses: xu-cheng/latex-action@v2
+          push: false
+          tags: &tag custom-latex-image-with-font:latest
+
+      - name: Create PDF
+        uses: xu-cheng/latex-action@v3
         with:
+          docker_image: *tag
           root_file: cv.tex
+          latexmk_use_xelatex: true
           post_compile: mv cv.pdf ./public
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

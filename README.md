@@ -1,3 +1,5 @@
 # Curriculum Vitae
 
-Source [here](https://www.latextemplates.com/template/developer-cv).
+My CV, written in LaTeX.
+
+Published to [cv.awicks.io](https://cv.awicks.io) using GitHub Pages.
