@@ -1,27 +1,44 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import pathlib
+import shutil
 import tempfile
 import urllib.request
+import urllib.parse
 import zipfile
 
 PROJECT_NAME = "IBM/plex"
-RELEASE_API_ENDPOINT = f"https://api.github.com/repos/{PROJECT_NAME}/releases/latest"
+RELEASE_NAME = "@ibm/ibm-plex-sans@1.1.0"
+RELEASE_API_ENDPOINT = f"https://api.github.com/repos/{PROJECT_NAME}/releases"
 
-DESIRED_ASSET = "TrueType.zip"
+DESIRED_ASSET = "ibm-plex-sans.zip"
 
-FONT_SUBFOLDER = "TrueType"
+FONT_SUBFOLDER = "ibm-plex-sans/fonts/complete"
 FONT_DEST_DIR = pathlib.Path("/usr/local/share/fonts")
 
-def get_latest_release_metadata() -> str:
-    with urllib.request.urlopen(RELEASE_API_ENDPOINT) as resp:
+def get_release_metadata() -> str:
+    with urllib.request.urlopen(RELEASE_API_ENDPOINT) as release_metadata_raw:
+        data = release_metadata_raw.read()
+        encoding = release_metadata_raw.info().get_content_charset("utf-8")
+        release_metadata = json.loads(data.decode(encoding))
+
+    release_url = None
+    for release in release_metadata:
+        if release.get("name", "") == RELEASE_NAME:
+            release_url = f"{RELEASE_API_ENDPOINT}/{release['id']}"
+
+    if release_url is None:
+        raise RuntimeError("Could not find release version")
+
+    with urllib.request.urlopen(release_url) as resp:
         data = resp.read()
         encoding = resp.info().get_content_charset("utf-8")
         return data.decode(encoding)
 
 def get_font_url() -> str:
-    raw_metadata = get_latest_release_metadata()
+    raw_metadata = get_release_metadata()
     metadata = json.loads(raw_metadata)
 
     url = ""
@@ -61,4 +78,5 @@ if __name__ == "__main__":
                 if file.suffix == ".ttf":
                     dest_file = FONT_DEST_DIR / file.name
                     print(dest_file)
-                    file.rename(dest_file)
+                    shutil.copy(file, dest_file)
+                    os.remove(file)
