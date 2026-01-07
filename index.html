@@ -1,23 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Wicks - Curriculum Vitae</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <head>
-    <title>Curriculum Vitae</title>
-    <link rel="stylesheet" href="styles.css"/>
-    <meta charset="utf-8" />
-      <meta
-        name="viewport"
-        content="width=device-width"
-      />
-  </head>
+    html, body {
+      height: 100%;
+      background-color: #2e2e2e;
+      overflow: hidden;
+    }
 
-  <body>
-    <object
-      type="application/pdf"
-      data="cv.pdf#view=FitV&zoom=page-fit&toolbar=0&navpanes=0&scrollbar=0&messages=0&border=0"
-    >
-      <iframe src="https://docs.google.com/viewer?url=https://cv.awicks.io/cv.pdf&embedded=true"></iframe>
-    <object/>
-  </body>
+    .pdf-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
 
+    #pdfCanvas {
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      background: white;
+      display: block;
+    }
+
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ccc;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .spinner {
+      border: 3px solid #4a4a4a;
+      border-top: 3px solid #0E508D;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .error {
+      display: none;
+      padding: 2rem;
+      text-align: center;
+      color: #ff6b6b;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .error a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #0E508D;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .pdf-container {
+        padding: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="pdf-container">
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      Loading CV...
+    </div>
+    
+    <canvas id="pdfCanvas"></canvas>
+
+    <div class="error" id="error">
+      <h2>Unable to load PDF</h2>
+      <p style="margin: 1rem 0;">There was an error loading the CV.</p>
+      <a href="cv.pdf" download="Alex_Wicks_CV.pdf">Download PDF Instead</a>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    // Configure PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function hideLoading() {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    function showError() {
+      hideLoading();
+      document.getElementById('error').classList.add('show');
+    }
+
+    function renderPage() {
+      const container = document.querySelector('.pdf-container');
+      const containerWidth = container.clientWidth - 32;
+      const containerHeight = container.clientHeight - 32;
+      
+      pdfjsLib.getDocument('cv.pdf').promise.then(function(pdf) {
+        pdf.getPage(1).then(function(page) {
+          // Get viewport at scale 1
+          const viewport = page.getViewport({scale: 1});
+          
+          // Calculate scale to fit height (A4 portrait)
+          const scaleHeight = containerHeight / viewport.height;
+          const scaleWidth = containerWidth / viewport.width;
+          
+          // Use the smaller scale to ensure it fits
+          const scale = Math.min(scaleHeight, scaleWidth);
+          
+          const scaledViewport = page.getViewport({scale: scale});
+          
+          canvas.height = scaledViewport.height;
+          canvas.width = scaledViewport.width;
+
+          const renderContext = {
+            canvasContext: ctx,
+            viewport: scaledViewport
+          };
+
+          page.render(renderContext).promise.then(function() {
+            hideLoading();
+          });
+        });
+      }).catch(function(error) {
+        console.error('Error loading PDF:', error);
+        showError();
+      });
+    }
+
+    // Initial render
+    renderPage();
+
+    // Re-render on window resize
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(renderPage, 250);
+    });
+  </script>
+</body>
 </html>
