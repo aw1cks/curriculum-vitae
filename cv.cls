@@ -21,8 +21,8 @@
 
 \geometry{
 	paper=a4paper, % Paper size, change to letterpaper for US letter size
-	top=0.75cm, % Top margin
-	bottom=1cm, % Bottom margin
+	top=0.6cm, % Top margin
+	bottom=0.6cm, % Bottom margin
 	left=2.5cm, % Left margin
 	right=2.5cm, % Right margin
 	headheight=0.25cm, % Header height
@@ -63,13 +63,13 @@
 }
 
 \newcommand{\cvName}[1]{
-  \textcolor{black}{\textbf{\texttt{\HUGE{#1}}}}
+  \textcolor{black}{\textbf{\texttt{\huge{#1}}}}
 }
 
 \newcommand{\cvHeading}[2]{
   \begin{center}
     #2
-
+    \par
     \cvName{#1}
   \end{center}
 }
@@ -77,14 +77,14 @@
 \newcommand{\cvSection}[1]{
   \smallskip
   \begin{center}
-    \textcolor{black}{\texttt{\LARGE{#1}}}
+    \textcolor{black}{\texttt{\large{#1}}}
   \end{center}
   \smallskip
 }
 
 \newcommand{\cvParagraph}[1]{
   \raggedright
-  \textcolor{fg}{\normalsize{#1}}
+  \textcolor{fg}{\small{#1}}
 }
 
 \newcommand{\cvDateRange}[2]{
@@ -94,19 +94,19 @@
 }
 
 \newcommand{\cvJob}[3]{
-
+  \par
   \medskip
   \raggedright
   \textcolor{accent}{\large{#1}}
-  \textcolor{black}{\normalsize{#2}}
-
+  \textcolor{black}{\footnotesize{#2}}
+  \par
   \smallskip
   \cvParagraph{#3}
 }
 
 \newcommand{\cvCompany}[3][]{
   \smallskip
-  \raggedright\textcolor{black}{\textbf{\Large{#2}}} \textcolor{fg}{\large{#1}}
+  \raggedright\textcolor{black}{\textbf{\large{#2}}} \textcolor{fg}{\large{#1}}
   #3
   \begin{center}
     \textcolor{fg}{\noindent\rule{\dimexpr\textwidth-1cm\relax}{0.125pt}}
