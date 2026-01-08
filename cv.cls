@@ -21,14 +21,15 @@
 
 \geometry{
 	paper=a4paper, % Paper size, change to letterpaper for US letter size
-	top=0.6cm, % Top margin
-	bottom=0.6cm, % Bottom margin
-	left=2.5cm, % Left margin
-	right=2.5cm, % Right margin
-	headheight=0.25cm, % Header height
-	footskip=1cm, % Space from the bottom margin to the baseline of the footer
-	headsep=0.25cm, % Space from the top margin to the baseline of the header
+	top=1cm, % Top margin
+	bottom=1cm, % Bottom margin
+	left=1.5cm, % Left margin
+	right=1.5cm, % Right margin
+	headheight=0.1cm, % Header height
+	footskip=0.1cm, % Space from the bottom margin to the baseline of the footer
+	headsep=0.1cm, % Space from the top margin to the baseline of the header
 }
+\setlength{\parindent}{0pt} % disable paragraph indentation
 
 %%%%%%
 
@@ -76,15 +77,13 @@
 
 \newcommand{\cvSection}[1]{
   \smallskip
-  \begin{center}
-    \textcolor{black}{\texttt{\large{#1}}}
-  \end{center}
-  \smallskip
+  \raggedright
+  \textcolor{accent}{\texttt{\textbf{\large{#1}}}}
+  \medskip
 }
 
-\newcommand{\cvParagraph}[1]{
-  \raggedright
-  \textcolor{fg}{\small{#1}}
+\newcommand{\cvParagraph}[1]{%
+  \par\raggedright\small\textcolor{fg}{#1}\par%
 }
 
 \newcommand{\cvDateRange}[2]{
@@ -95,7 +94,7 @@
 
 \newcommand{\cvJob}[3]{
   \par
-  \medskip
+  \smallskip
   \raggedright
   \textcolor{accent}{\large{#1}}
   \textcolor{black}{\footnotesize{#2}}
@@ -105,8 +104,8 @@
 }
 
 \newcommand{\cvCompany}[3][]{
-  \smallskip
-  \raggedright\textcolor{black}{\textbf{\large{#2}}} \textcolor{fg}{\large{#1}}
+  \par
+  \raggedright\textcolor{black}{\textbf{\large{#2}}} \textcolor{fg}{#1}
   #3
   \begin{center}
     \textcolor{fg}{\noindent\rule{\dimexpr\textwidth-1cm\relax}{0.125pt}}

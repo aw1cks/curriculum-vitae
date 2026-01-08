@@ -12,27 +12,49 @@
   \cvSection{About Me}
 
   \cvParagraph{
-    Experienced technical leader in systems, storage and cloud infrastructure,
-    with a strong affinity for automation and reducing toil. While I have a heavy administration background,
-    I also enjoy programming, primarily in Python, Go and Rust. I do not shy away from learning new skills and technologies.
+    Technical leader bridging infrastructure and software engineering. My background spans bare-metal to cloud, with particular expertise in
+    Kubernetes, observability, CI/CD and infrastructure as code.
+    I'm equally comfortable architecting a PKI solution, writing a Kubernetes operator, or optimizing network performance -- whatever solves the problem at hand.
+    I strive to empower developers and make infrastructure invisible to users.
     Outside of work, I enjoy photography, cars, cooking and travelling.
   }
 
+  \smallskip
+
+  \cvParagraph{
+    \textbf{\textcolor{accent}{Skills:}}\newline
+    \accentText{Containerisation \& Orchestration:} Kubernetes, etcd, containerd, Docker
+    \textbar\:
+    \accentText{Cloud:} Azure, AWS, Terraform
+    \textbar\:
+    \accentText{Languages:} Go, Rust, Python, Bash
+    \newline
+    \accentText{Observability:} OpenTelemetry, Prometheus, Thanos, Loki, Vector
+    \textbar\:
+    \accentText{CI/CD:} GitLab CI, ArgoCD, GitOps
+    \newline
+    \accentText{Infrastructure:} Linux, Windows, VMware, Networking, PKI, Storage
+    \newline
+    \accentText{Certifications:} Red Hat Certified System Administrator (RHCSA), Azure AZ-700: Designing and Implementing Azure Networking Solutions
+  }
+
+  \medskip
   \cvSection{Experience}
 
   \cvCompany{Maven Securities}{
     \cvJob{Platform Engineer}{\cvDateRange{Jun. 2024}{Present}}{
-      Migrated Kubernetes service advertisement from MetalLB to Cilium BGP control plane, implementing custom Prometheus exporter for monitoring.
+      Supporting \textasciitilde100 development engineers with platform infrastructure and traders with analysis environments (JupyterHub, Coder).
+      Migrated Kubernetes networking from MetalLB to Cilium BGP, implementing custom Prometheus exporter.
       Designed an automated PKI solution using ACME and step-ca.
       Migrated large Kafka clusters into Kubernetes using Strimzi.
       Maintained an operator to configure OIDC clients in Keycloak, including a rewrite from Go to Rust, and Envoy Gateway integration for app-agnostic authentication.
-      Deployed an on-premises data warehouse platform leveraging VAST S3, Hive metastore, Lakekeeper and Trino, working with data team to migrate from AWS Athena.
+      Deployed an on-premises data warehouse platform leveraging VAST S3, Hive metastore, Lakekeeper and Trino, working with data team to migrate from AWS Athena -- saving hundreds of thousands in cloud costs.
     }
   }
 
   \cvCompany{Speechmatics}{
     \cvJob{Sr. Site Reliability Engineer}{\cvDateRange{Jan. 2023}{Apr. 2024}}{
-      In addition to previous responsiblities -
+      In addition to previous responsibilities -
       \accentText{primary technical contact} for all on-premises resources (networking, VMware, SAN, etc).
       Setup of high-performance bare-metal GPU clusters (NVidia H100 \& A100), including updating our fork of Sun Grid Engine to work on Ubuntu 22.04.
       Replaced manual processes with a GitOps pipeline for our SaaS environment releases, enabling blue/green and canary testing of new infrastructure and software across multiple clusters.
@@ -40,7 +62,7 @@
       from \accentText{days} to \accentText{hours} as well as adding extra quality checks.
     }
     \cvJob{Site Reliability Engineer}{\cvDateRange{Jan. 2022}{Jan. 2023}}{
-      Working across on-premises AI GPU research and training environment, and production SaaS environment in \accentText{Azure}.
+      Working across on-premises AI GPU research and training environment for \textasciitilde50 engineers and researchers, and production SaaS environment in \accentText{Azure} spanning 6 regions.
       Management of infrastructure deployments using \accentText{GitLab CI} \& \accentText{Terraform}, designing modules to abstract this,
       as well as conformance testing frameworks with \accentText{Terratest}.
       Planned and executed datacentre migration to a new colocation.
@@ -49,8 +71,9 @@
 
   \cvCompany[HMRC Market Unit]{Capgemini}{
     \cvJob{Platform Engineer -- Metrics \& Monitoring}{\cvDateRange{Jul. 2021}{Dec. 2021}}{
+      Working on the monitoring platform for HMRC AWS infrastructure, spanning two regions with thousands of EC2 nodes, and hundreds of Kubernetes nodes (10,000s pods).
       Implement \accentText{Thanos} in a large \accentText{AWS} environment for Prometheus metric aggregation and long-term retention,
-      enabling a single pane of glass across thousands of EC2 instances and 10,000s of Kubernetes pods.
+      enabling a single pane of glass across the entire estate.
       Design and roll out a blackbox monitoring solution for key platform services such as \accentText{Consul} \& \accentText{Vault},
       monitoring availability from various tenants to ensure SLAs were not breached.
     }
@@ -73,8 +96,5 @@
       Mentoring \& training junior engineers to complete BAU tasks.
     }
   }
-  \begin{center}
-    \textcolor{fg}{\footnotesize{Further history available upon request}}
-  \end{center}
 
 \end{document}
