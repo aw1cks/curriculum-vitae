@@ -19,28 +19,27 @@
     Outside of work, I enjoy photography, cars, cooking and travelling.
   }
 
-  \smallskip
+  \cvSection{Skills}
 
-  \cvParagraph{
-    \textbf{\textcolor{accent}{Skills:}}\newline
-    \accentText{Containerisation \& Orchestration:} Kubernetes, etcd, containerd, Docker
-    \textbar\:
-    \accentText{Cloud:} Azure, AWS, Terraform
-    \textbar\:
-    \accentText{Languages:} Go, Rust, Python, Bash
-    \newline
-    \accentText{Observability:} OpenTelemetry, Prometheus, Thanos, Loki, Vector
-    \textbar\:
-    \accentText{CI/CD:} GitLab CI, ArgoCD, GitOps
-    \newline
-    \accentText{Infrastructure:} Linux, Windows, VMware, Networking, PKI, Storage
-    \newline
-    \accentText{Certifications:} Red Hat Certified System Administrator (RHCSA), Azure AZ-700: Designing and Implementing Azure Networking Solutions
+  \cvSkillsGrid{
+    \cvSkillCategory{Containerisation \& Orchestration}{Kubernetes, etcd, containerd, Docker}
+
+    \cvSkillCategory{Languages}{Go, Rust, Python, Bash}
+
+    \cvSkillCategory{CI/CD \& GitOps}{GitLab CI, ArgoCD, GitOps}
+  }{
+    \cvSkillCategory{Cloud \& Infrastructure as Code}{Azure, AWS, Terraform}
+
+    \cvSkillCategory{Observability}{OpenTelemetry, Prometheus, Thanos, Loki, Vector}
+
+    \cvSkillCategory{Infrastructure}{Linux, Windows, VMware, Networking, PKI, Storage}
   }
 
-  \medskip
-  \cvSection{Experience}
+  \cvSkillsDivider
 
+  \cvCertifications{Red Hat Certified System Administrator (RHCSA) $\bullet$ Azure AZ-700: Designing and Implementing Azure Networking Solutions}
+
+  \cvSection{Experience}
   \cvCompany{Maven Securities}{
     \cvJob{Platform Engineer}{\cvDateRange{Jun. 2024}{Present}}{
       Supporting \textasciitilde100 development engineers with platform infrastructure and traders with analysis environments (JupyterHub, Coder).
@@ -51,7 +50,6 @@
       Deployed an on-premises data warehouse platform leveraging VAST S3, Hive metastore, Lakekeeper and Trino, working with data team to migrate from AWS Athena -- saving hundreds of thousands in cloud costs.
     }
   }
-
   \cvCompany{Speechmatics}{
     \cvJob{Sr. Site Reliability Engineer}{\cvDateRange{Jan. 2023}{Apr. 2024}}{
       In addition to previous responsibilities -
@@ -68,7 +66,6 @@
       Planned and executed datacentre migration to a new colocation.
     }
   }
-
   \cvCompany[HMRC Market Unit]{Capgemini}{
     \cvJob{Platform Engineer -- Metrics \& Monitoring}{\cvDateRange{Jul. 2021}{Dec. 2021}}{
       Working on the monitoring platform for HMRC AWS infrastructure, spanning two regions with thousands of EC2 nodes, and hundreds of Kubernetes nodes (10,000s pods).
@@ -78,7 +75,6 @@
       monitoring availability from various tenants to ensure SLAs were not breached.
     }
   }
-
   \cvCompany{Flextrade}{
     \cvJob{DevOps Engineer}{\cvDateRange{Aug. 2020}{Jul. 2021}}{
       Create bare-metal \accentText{Kubernetes} clusters using \accentText{PXE automation}.
@@ -96,5 +92,4 @@
       Mentoring \& training junior engineers to complete BAU tasks.
     }
   }
-
 \end{document}
