@@ -44,44 +44,42 @@
     \cvJob{Platform Engineer}{\cvDateRange{Jun. 2024}{Present}}{
       Supporting \textasciitilde100 development engineers with platform infrastructure and traders with analysis environments (JupyterHub, Coder).
       Migrated Kubernetes networking from MetalLB to Cilium BGP, implementing custom Prometheus exporter.
-      Designed an automated PKI solution using ACME and step-ca.
-      Migrated large Kafka clusters into Kubernetes using Strimzi.
-      Maintained an operator to configure OIDC clients in Keycloak, including a rewrite from Go to Rust, and Envoy Gateway integration for app-agnostic authentication.
-      Deployed an on-premises data warehouse platform leveraging VAST S3, Hive metastore, Lakekeeper and Trino, working with data team to migrate from AWS Athena -- saving hundreds of thousands in cloud costs.
+      Implemented an \accentText{automated PKI solution} using ACME and step-ca.
+      Migrated large \accentText{Kafka} clusters into Kubernetes using Strimzi.
+      Maintained a \accentText{Kubernetes operator} to configure OIDC clients in Keycloak, including a rewrite from Go to Rust, and Envoy Gateway integration for app-agnostic authentication.
+      Deployed an \accentText{on-premises data warehouse} platform leveraging VAST S3, Hive metastore, Lakekeeper and Trino, working with data team to migrate from AWS Athena -- saving \accentText{\$200k+/yr} in cloud costs.
     }
   }
   \cvCompany{Speechmatics}{
     \cvJob{Sr. Site Reliability Engineer}{\cvDateRange{Jan. 2023}{Apr. 2024}}{
-      In addition to previous responsibilities -
-      \accentText{primary technical contact} for all on-premises resources (networking, VMware, SAN, etc).
-      Setup of high-performance bare-metal GPU clusters (NVidia H100 \& A100), including updating our fork of Sun Grid Engine to work on Ubuntu 22.04.
-      Replaced manual processes with a GitOps pipeline for our SaaS environment releases, enabling blue/green and canary testing of new infrastructure and software across multiple clusters.
-      Leading best practices in our Kubernetes environments - e.g. implementing a \accentText{GitOps CI/CD} workflow, which \accentText{reduced deployment time} across our environments
-      from \accentText{days} to \accentText{hours} as well as adding extra quality checks.
+      Owner of all on-premises resources (networking, VMware, SAN, etc).
+      Built \accentText{high-performance bare-metal GPU clusters} (NVidia H100 \& A100), including updating our fork of Sun Grid Engine to work on Ubuntu 22.04.
+      Replaced manual processes with a \accentText{GitOps pipeline} for our SaaS environment releases, enabling blue/green and canary testing of new infrastructure and software across multiple clusters,
+      and \accentText{reducing deployment time} across our environments from \accentText{days} to \accentText{hours} as well as adding extra quality checks.
     }
     \cvJob{Site Reliability Engineer}{\cvDateRange{Jan. 2022}{Jan. 2023}}{
-      Working across on-premises AI GPU research and training environment for \textasciitilde50 engineers and researchers, and production SaaS environment in \accentText{Azure} spanning 6 regions.
+      On-premises AI GPU research and training environment for \textasciitilde50 engineers and researchers, and customer-facing SaaS environment in \accentText{Azure} spanning 6 regions.
       Management of infrastructure deployments using \accentText{GitLab CI} \& \accentText{Terraform}, designing modules to abstract this,
       as well as conformance testing frameworks with \accentText{Terratest}.
-      Planned and executed datacentre migration to a new colocation.
+      Led datacentre migration to a new colocation.
     }
   }
   \cvCompany[HMRC Market Unit]{Capgemini}{
     \cvJob{Platform Engineer -- Metrics \& Monitoring}{\cvDateRange{Jul. 2021}{Dec. 2021}}{
-      Working on the monitoring platform for HMRC AWS infrastructure, spanning two regions with thousands of EC2 nodes, and hundreds of Kubernetes nodes (10,000s pods).
+      Metrics \& monitoring platform for HMRC AWS infrastructure, spanning two regions with thousands of EC2 nodes, and hundreds of Kubernetes nodes (10,000+ pods).
       Implement \accentText{Thanos} in a large \accentText{AWS} environment for Prometheus metric aggregation and long-term retention,
       enabling a single pane of glass across the entire estate.
-      Design and roll out a blackbox monitoring solution for key platform services such as \accentText{Consul} \& \accentText{Vault},
+      Architected and deployed blackbox monitoring solution for key platform services such as \accentText{Consul} \& \accentText{Vault},
       monitoring availability from various tenants to ensure SLAs were not breached.
     }
   }
   \cvCompany{Flextrade}{
     \cvJob{DevOps Engineer}{\cvDateRange{Aug. 2020}{Jul. 2021}}{
-      Create bare-metal \accentText{Kubernetes} clusters using \accentText{PXE automation}.
-      Migrate CI/CD to new k8s deployment, \accentText{reducing build times by 40\%}.
-      Pilot \accentText{hybrid-cloud} bursting workloads into \accentText{AWS}.
-      Lead cross-functional initiative for continuous delivery framework.
-      Implementing automation framework for deploying VMs from Jira tickets.
+      Created bare-metal \accentText{Kubernetes} clusters using \accentText{PXE automation}.
+      Migrated CI/CD to new Kubernetes deployment, \accentText{reducing build times by 40\%}.
+      Piloted \accentText{hybrid-cloud} bursting workloads into \accentText{AWS}.
+      Led cross-functional initiative for continuous delivery framework.
+      Implemented automation framework for deploying VMs from Jira tickets.
     }
     \cvJob{Systems Administrator}{\cvDateRange{Mar. 2019}{Aug. 2020}}{
       Operations \& incident response in a complex on-premises, multi-tenant SaaS environment.
