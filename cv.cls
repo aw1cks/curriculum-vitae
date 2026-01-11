@@ -19,6 +19,7 @@
 
 \usepackage{geometry} % Required for adjusting page dimensions and margins
 \usepackage{multicol} % Multi-column bullet points
+\usepackage{enumitem}
 
 \geometry{
 	paper=a4paper, % Paper size, change to letterpaper for US letter size
@@ -30,12 +31,12 @@
 	footskip=0.1cm, % Space from the bottom margin to the baseline of the footer
 	headsep=0.1cm, % Space from the top margin to the baseline of the header
 }
-\setlength{\parindent}{20pt} % disable paragraph indentation
+\setlength{\parindent}{20pt}
 
 %%%%%%
 
 \usepackage[dvipsnames]{xcolor}
-\definecolor{fg}{HTML}{242424}
+\definecolor{fg}{HTML}{000000}
 \definecolor{accent}{HTML}{0E508D}
 
 %%%%%%
@@ -55,7 +56,7 @@
 \usepackage{fontawesome5}
 \newcommand{\contactEntry}[2]{
   \textcolor{accent}{\small{\faIcon{#1}}}
-  \textcolor{fg}{\normalsize{#2}}
+  \textcolor{fg}{\normalsize{\textbf{#2}}}
 }
 \newcommand{\contacts}[1]{
   \begin{tabular}{c}
@@ -129,9 +130,9 @@
   \cvParagraph{#3}
 }
 
-\newcommand{\cvCompany}[3][]{
+\newcommand{\cvCompany}[2]{
   \par
-  \raggedright\textcolor{black}{\textbf{\large{#2}}} \textcolor{fg}{#1}
-  #3
+  \raggedright\textcolor{black}{\textbf{\large{#1}}}
+  #2
   \medskip
 }
