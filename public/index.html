@@ -14,24 +14,20 @@
     html, body {
       height: 100%;
       background-color: #2e2e2e;
-      overflow: hidden;
+      overflow: auto; /* Allow scrolling */
     }
 
     .pdf-container {
       width: 100%;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      min-height: 100vh;
       padding: 1rem;
+      text-align: center; /* Center canvas */
     }
 
     #pdfCanvas {
-      max-width: 100%;
-      max-height: 100%;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       background: white;
-      display: block;
+      display: inline-block; /* Needed for text-align:center to work */
     }
 
     .loading {
@@ -80,9 +76,41 @@
       border-radius: 6px;
     }
 
+    #zoom-controls {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 100;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    #zoom-controls button {
+      width: 44px;
+      height: 44px;
+      font-size: 1.8rem;
+      line-height: 44px;
+      background-color: #0E508D;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.2s;
+      user-select: none;
+    }
+
+    #zoom-controls button:hover {
+      background-color: #1472c4;
+    }
+
     @media (max-width: 768px) {
       .pdf-container {
         padding: 0.5rem;
+      }
+      #zoom-controls {
+        bottom: 1rem;
+        right: 1rem;
       }
     }
   </style>
@@ -103,6 +131,11 @@
     </div>
   </div>
 
+  <div id="zoom-controls">
+    <button id="zoom-out" title="Zoom Out">-</button>
+    <button id="zoom-in" title="Zoom In">+</button>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
     // Configure PDF.js worker
@@ -110,61 +143,109 @@
 
     const canvas = document.getElementById('pdfCanvas');
     const ctx = canvas.getContext('2d');
+    const loadingDiv = document.getElementById('loading');
+    const errorDiv = document.getElementById('error');
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let scale = 1.0;
+    let pageIsRendering = false;
+    let pageNumIsPending = null;
 
     function hideLoading() {
-      document.getElementById('loading').style.display = 'none';
+      loadingDiv.style.display = 'none';
     }
 
     function showError() {
       hideLoading();
-      document.getElementById('error').classList.add('show');
+      errorDiv.classList.add('show');
     }
 
-    function renderPage() {
-      const container = document.querySelector('.pdf-container');
-      const containerWidth = container.clientWidth - 32;
-      const containerHeight = container.clientHeight - 32;
+    function renderPage(num) {
+      pageIsRendering = true;
       
-      pdfjsLib.getDocument('cv.pdf').promise.then(function(pdf) {
-        pdf.getPage(1).then(function(page) {
-          // Get viewport at scale 1
-          const viewport = page.getViewport({scale: 1});
-          
-          // Calculate scale to fit height (A4 portrait)
-          const scaleHeight = containerHeight / viewport.height;
-          const scaleWidth = containerWidth / viewport.width;
-          
-          // Use the smaller scale to ensure it fits
-          const scale = Math.min(scaleHeight, scaleWidth);
-          
-          const scaledViewport = page.getViewport({scale: scale});
-          
-          canvas.height = scaledViewport.height;
-          canvas.width = scaledViewport.width;
+      pdfDoc.getPage(num).then(page => {
+        const viewport = page.getViewport({ scale: scale });
+        const outputScale = window.devicePixelRatio || 1;
 
-          const renderContext = {
-            canvasContext: ctx,
-            viewport: scaledViewport
-          };
+        canvas.width = Math.floor(viewport.width * outputScale);
+        canvas.height = Math.floor(viewport.height * outputScale);
+        
+        canvas.style.width = `${Math.floor(viewport.width)}px`;
+        canvas.style.height = `${Math.floor(viewport.height)}px`;
 
-          page.render(renderContext).promise.then(function() {
-            hideLoading();
-          });
+        const transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport,
+          transform: transform
+        };
+
+        const renderTask = page.render(renderContext);
+        
+        renderTask.promise.then(() => {
+          pageIsRendering = false;
+          hideLoading();
+
+          if (pageNumIsPending !== null) {
+            renderPage(pageNumIsPending);
+            pageNumIsPending = null;
+          }
         });
-      }).catch(function(error) {
-        console.error('Error loading PDF:', error);
-        showError();
       });
     }
 
-    // Initial render
-    renderPage();
+    function queueRenderPage(num) {
+      if (pageIsRendering) {
+        pageNumIsPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
 
-    // Re-render on window resize
-    let resizeTimeout;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(renderPage, 250);
+    function onZoomIn() {
+      scale += 0.2;
+      queueRenderPage(pageNum);
+    }
+
+    function onZoomOut() {
+      if (scale <= 0.4) { // Set a minimum scale
+        return;
+      }
+      scale -= 0.2;
+      queueRenderPage(pageNum);
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', onZoomIn);
+    document.getElementById('zoom-out').addEventListener('click', onZoomOut);
+
+    // Load the document
+    pdfjsLib.getDocument('cv.pdf').promise.then(pdf => {
+      pdfDoc = pdf;
+      
+      // Initial render: calculate scale to fit the whole page
+      pdf.getPage(1).then(page => {
+          const container = document.querySelector('.pdf-container');
+          const style = getComputedStyle(container);
+          const paddingX = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+          const paddingY = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+
+          const availableWidth = container.clientWidth - paddingX;
+          const availableHeight = window.innerHeight - paddingY;
+
+          const viewport = page.getViewport({ scale: 1 });
+          
+          const scaleWidth = availableWidth / viewport.width;
+          const scaleHeight = availableHeight / viewport.height;
+          
+          scale = Math.min(scaleWidth, scaleHeight);
+          queueRenderPage(pageNum);
+      });
+
+    }).catch(error => {
+      console.error('Error loading PDF:', error);
+      showError();
     });
   </script>
 </body>
