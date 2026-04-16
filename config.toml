@@ -1,0 +1,4 @@
+title = "Curriculum Vitae"
+base_url = "https://cv.awicks.io"
+description = "My CV built with JSON Resume, Zola and Weasyprint"
+output_dir = "public"

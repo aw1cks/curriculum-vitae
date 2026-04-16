@@ -1,0 +1,252 @@
+:root {
+  --accent: #0e508d;
+  --fg: #000000;
+  --icon-size: 13px;
+}
+
+@page {
+  size: A4;
+  margin: 1cm 1.5cm;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 8.5pt;
+  color: var(--fg);
+  line-height: 1.25;
+}
+
+strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+a {
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.cv-heading {
+  margin-bottom: 0.4em;
+}
+
+.cv-name {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 20pt;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0;
+  line-height: 1;
+}
+
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em;
+  margin-top: -0.25em;
+}
+
+.contact-entry {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  white-space: nowrap;
+}
+
+.contact-entry svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  color: var(--accent);
+}
+
+.contact-entry span,
+.contact-entry a {
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+
+.cv-section {
+  margin-top: 0.2em;
+}
+
+.section-heading {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0.15em 0;
+}
+
+.summary {
+  font-size: 8.5pt;
+  line-height: 1.1;
+  margin: 0.15em 0;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2em 1.5em;
+}
+
+.skill-category {
+  margin-bottom: 0.2em;
+}
+
+.skill-name {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+
+.skill-keywords {
+  font-size: 8pt;
+}
+
+.skills-divider {
+  border: none;
+  border-top: 0.25pt solid var(--fg);
+  margin: 0.25em 0;
+}
+
+.certifications {
+  margin-top: 0.15em;
+}
+
+.cert-name {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+
+.cert-list {
+  font-size: 8pt;
+}
+
+.company-name {
+  font-size: 11pt;
+  font-weight: 700;
+  color: var(--fg);
+  margin: 0.6em 0 0.1em;
+}
+
+.section-heading + .company-name {
+  margin-top: 0.15em;
+}
+
+.job {
+  margin-left: 0.15em;
+  margin-bottom: 0.15em;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0.15em 0;
+}
+
+.job-title {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 8.5pt;
+}
+
+.job-dates {
+  font-size: 7.5pt;
+  font-weight: 700;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.job-summary {
+  font-size: 8.5pt;
+  margin: 0.1em 0;
+  line-height: 1.2;
+}
+
+.job-highlights {
+  list-style-type: disc;
+  margin-left: 1.2em;
+  font-size: 8.5pt;
+}
+
+.job-highlights li {
+  margin-bottom: 0.25em;
+  line-height: 1.25;
+}
+
+@media screen {
+  html {
+    background-color: #f3f4f6;
+  }
+  body {
+    max-width: 21cm;
+    margin: 2rem auto;
+    padding: 1cm 1.5cm;
+    background-color: #ffffff;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  html {
+    background-color: #1a1a1a;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  body {
+    margin: 0;
+    width: 100%;
+    box-shadow: none;
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  .job-header {
+    flex-direction: column;
+  }
+  .job-dates {
+    margin-top: 0.2em;
+  }
+  .cv-name {
+    font-size: 18pt;
+  }
+}
+
+@media screen {
+  .contacts {
+    margin-top: 0.15em;
+  }
+}
+
+@media print {
+  .company-name {
+    break-after: avoid;
+  }
+  .job-header {
+    break-after: avoid;
+  }
+  .job {
+    break-inside: avoid;
+  }
+  .section-heading {
+    break-after: avoid;
+  }
+  .skill-category {
+    break-inside: avoid;
+  }
+}

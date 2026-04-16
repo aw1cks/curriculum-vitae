@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 810 120" width="100%">
+
+  <!-- Node 1: cv.yaml (database cylinder) -->
+  <g transform="translate(90, 60)">
+    <!-- Cylinder body: single path combining the barrel and top ellipse -->
+    <path d="M-70,-20 C-70,-32 70,-32 70,-20 L70,20 C70,32 -70,32 -70,20 Z" fill="#0E508D" stroke="#093660" stroke-width="3"/>
+    <!-- Top ellipse drawn on top to give the 3D cap look -->
+    <path d="M-70,-20 C-70,-32 70,-32 70,-20 C70,-8 -70,-8 -70,-20 Z" fill="#1a6bb5" stroke="#093660" stroke-width="3"/>
+    <text y="5" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600" font-size="15px">cv.yaml</text>
+  </g>
+
+  <!-- Arrow 1: line + inline arrowhead polygon -->
+  <path d="M 170 60 L 305 60" stroke="#8b949e" stroke-width="2" fill="none" />
+  <polygon points="305,54 317,60 305,66" fill="#8b949e" />
+  <text x="242.5" y="48" fill="#8b949e" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600" font-size="14px">Zola &amp; Tera</text>
+
+  <!-- Node 2: HTML / CSS (pill shape) -->
+  <g transform="translate(405, 60)">
+    <rect x="-75" y="-30" width="150" height="60" rx="30" ry="30" fill="#8957e5" stroke="#6e40c9" stroke-width="3" />
+    <text y="2" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600" font-size="15px">HTML / CSS</text>
+  </g>
+
+  <!-- Arrow 2: line + inline arrowhead polygon -->
+  <path d="M 495 60 L 625 60" stroke="#8b949e" stroke-width="2" fill="none" />
+  <polygon points="625,54 637,60 625,66" fill="#8b949e" />
+  <text x="565" y="48" fill="#8b949e" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600" font-size="14px">WeasyPrint</text>
+
+  <!-- Node 3: cv.pdf (document icon with folded corner) -->
+  <g transform="translate(720, 60)">
+    <!-- Document body as a single closed path -->
+    <path d="M-70,-30 L50,-30 L70,-10 L70,30 L-70,30 Z" fill="#da3633" stroke="#a41e1c" stroke-width="3" stroke-linejoin="round" />
+    <!-- Fold triangle: explicit darker corner -->
+    <path d="M50,-30 L50,-10 L70,-10 Z" fill="#a41e1c" />
+    <!-- Fold edge lines for clarity -->
+    <line x1="50" y1="-30" x2="50" y2="-10" stroke="#a41e1c" stroke-width="2" />
+    <line x1="50" y1="-10" x2="70" y2="-10" stroke="#a41e1c" stroke-width="2" />
+    <text y="2" fill="#ffffff" text-anchor="middle" dominant-baseline="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-weight="600" font-size="15px">cv.pdf</text>
+  </g>
+</svg>

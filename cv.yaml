@@ -1,0 +1,175 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json
+certificates:
+  - name: Red Hat Certified System Administrator (RHCSA)
+  - name: "Azure AZ-700: Designing and Implementing Azure Networking Solutions"
+
+interests:
+  - name: Photography
+  - name: Cars
+  - name: Cooking
+  - name: Traveling
+
+basics:
+  name: Alex Wicks
+  email: alex+cv@awicks.io
+  phone: "+44 7484 6166 43"
+  summary: >
+    Technical leader bridging infrastructure and software engineering with expertise
+    spanning bare-metal to cloud environments. I specialize in Kubernetes, observability,
+    CI/CD, and infrastructure as code, bringing a pragmatic approach to complex problems —
+    whether architecting PKI solutions, writing Kubernetes operators, or optimizing network
+    performance. I focus on empowering developers through invisible, reliable infrastructure.
+  location:
+    city: London
+    countryCode: GB
+  profiles:
+    - network: GitHub
+      username: aw1cks
+      url: https://github.com/aw1cks
+
+work:
+  - name: Maven Securities
+    position: Platform Engineer
+    startDate: "2024-06"
+    summary: >
+      Support ~100 development engineers with platform infrastructure and provide
+      traders with analysis environments (JupyterHub, Coder).
+    highlights:
+      - >
+        Migrated Kubernetes networking from MetalLB to <strong>Cilium BGP</strong>,
+        implementing peering with ToR switches and developing a
+        <strong>custom Prometheus exporter</strong> for visibility into BGP session
+        state and route advertisements.
+      - >
+        Implemented an <strong>automated PKI solution</strong> using ACME and step-ca,
+        eliminating manual certificate management and enabling automated TLS for
+        internal services.
+      - >
+        Migrated large <strong>Kafka</strong> clusters into Kubernetes using Strimzi
+        for our logging pipelines, including optimisations to consumer and producer
+        throughput, reducing system latency.
+      - >
+        Maintain a <strong>custom Kubernetes operator</strong> for configuring OIDC
+        clients in Keycloak, including a complete rewrite from Go to Rust for improved
+        performance and maintainability, plus <strong>Envoy Gateway</strong> integration
+        for application-agnostic authentication.
+      - >
+        Deployed an <strong>on-premises data warehouse</strong> platform using VAST S3,
+        Hive metastore, Lakekeeper, and Trino, collaborating with the data team to
+        migrate from AWS Athena and save <strong>$200k+/year</strong> in cloud costs
+        while improving query performance and reducing latency in data availability.
+
+  - name: Speechmatics
+    position: Sr. Site Reliability Engineer
+    startDate: "2023-01"
+    endDate: "2024-04"
+    summary: >
+      Owned all on-premises resources including networking, VMware, and SAN
+      infrastructure.
+    highlights:
+      - >
+        Built <strong>high-performance bare-metal GPU clusters</strong> (NVIDIA H100 &
+        A100) for AI training workloads, including updating our Sun Grid Engine fork for
+        Ubuntu 22.04 compatibility.
+      - >
+        Replaced manual processes with a <strong>GitOps pipeline</strong> for SaaS
+        environment releases, enabling blue/green and canary testing of new infrastructure
+        and software across multiple clusters. This reduced deployment time from
+        <strong>days</strong> to <strong>hours</strong> while adding automated quality
+        checks and rollback capabilities.
+
+  - name: Speechmatics
+    position: Site Reliability Engineer
+    startDate: "2022-01"
+    endDate: "2023-01"
+    summary: >
+      Managed on-premises AI GPU research and training environment for ~50 engineers and
+      researchers, plus customer-facing SaaS environment in <strong>Azure</strong>
+      spanning 6 regions.
+    highlights:
+      - >
+        Managed infrastructure deployments using <strong>GitLab CI</strong> and
+        <strong>Terraform</strong>, designing reusable modules and conformance testing
+        frameworks with <strong>Terratest</strong>.
+      - Led datacentre migration to a new colocation.
+
+  - name: "Capgemini — HMRC Market Unit"
+    position: "Platform Engineer — Metrics & Monitoring"
+    startDate: "2021-07"
+    endDate: "2021-12"
+    summary: >
+      Built metrics and monitoring platform for HMRC AWS infrastructure spanning two
+      regions with thousands of EC2 nodes and hundreds of Kubernetes nodes (10,000+ pods).
+    highlights:
+      - >
+        Implemented <strong>Thanos</strong> for Prometheus metric aggregation and
+        long-term retention, providing unified observability across the entire estate.
+      - >
+        Deployed blackbox monitoring for platform services including
+        <strong>Consul</strong> and <strong>Vault</strong> to ensure SLA compliance.
+
+  - name: Flextrade
+    position: DevOps Engineer
+    startDate: "2020-08"
+    endDate: "2021-07"
+    highlights:
+      - >
+        Created bare-metal <strong>Kubernetes</strong> clusters using
+        <strong>PXE automation</strong> and migrated CI/CD to Kubernetes,
+        <strong>reducing build times by 40%</strong>.
+      - >
+        Piloted <strong>hybrid-cloud</strong> bursting workloads into AWS
+        and led <strong>continuous delivery</strong> framework initiative.
+
+  - name: Flextrade
+    position: Systems Administrator
+    startDate: "2019-03"
+    endDate: "2020-08"
+    highlights:
+      - >
+        Operations and incident response in a complex <strong>on-premises</strong>, multi-tenant SaaS
+        environment.
+      - >
+        Linux and Windows <strong>server administration</strong>,
+        <strong>VMWare vSphere</strong> & SAN maintenance and upgrades,
+        <strong>firewall</strong> and <strong>switch</strong> configuration and troubleshooting;
+        mentorship of junior engineers.
+
+skills:
+  - name: Containerisation & Orchestration
+    keywords:
+      - Kubernetes
+      - Docker
+  - name: Languages
+    keywords:
+      - Go
+      - Rust
+      - Python
+      - Bash
+  - name: CI/CD & GitOps
+    keywords:
+      - GitLab CI
+      - ArgoCD
+      - GitOps
+  - name: Cloud & Infrastructure as Code
+    keywords:
+      - Azure
+      - AWS
+      - Ansible
+      - Terraform
+  - name: Observability
+    keywords:
+      - OpenTelemetry
+      - Prometheus
+      - Thanos
+      - Loki
+      - Vector
+  - name: Infrastructure
+    keywords:
+      - Linux
+      - Windows
+      - VMware
+      - Networking
+      - PKI
+      - Storage
