@@ -1,4 +1,4 @@
-{% set cv = load_data(path=section.extra.resume_data) %} {% set months = ["Jan.", "Feb.", "Mar.", "Apr.", "May", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."] %} {% set css_content = load_data(path="static/cv.css",
+{% set cv = load_data(path=section.extra.resume_data) %} {% set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %} {% set css_content = load_data(path="static/cv.css",
  format="plain") %} {% set accent_color = css_content | split(pat="--accent:") |
  nth(n=1) | split(pat=";") | first | trim %} {% set icon_location = load_data(path="static/icons/location.svg", format="plain") |
  replace(from="currentColor", to=accent_color) %} {% set icon_github = load_data(path="static/icons/github.svg", format="plain") |
@@ -24,7 +24,11 @@
                 </span>
                 <span class="contact-entry">
                     {{ icon_github | safe }}
-                    <a href="{{ cv.basics.profiles[0].url }}">{{ cv.basics.profiles[0].username }}</a>
+                    <a
+                        href="{{ cv.basics.profiles[0].url }}"
+                        aria-label="GitHub profile: {{ cv.basics.profiles[0].username }}"
+                        title="GitHub: {{ cv.basics.profiles[0].username }}"
+                    >{{ cv.basics.profiles[0].username }}</a>
                 </span>
                 <span class="contact-entry">
                     {{ icon_email | safe }}
@@ -39,38 +43,17 @@
         <section class="cv-section">
             <h2 class="section-heading">About Me</h2>
             <p class="summary">{{ cv.basics.summary }}</p>
-            <p class="summary">
-                Outside of work, I enjoy{% set hobbies = cv.interests | map(attribute="name") %}
-                {%- if hobbies | length == 1 %}
-                  {{ hobbies | first | lower }}
-                {%- elif hobbies | length == 2 %}
-                  {{ hobbies[0] | lower }} and {{ hobbies[1] | lower }}
-                {%- else -%}
-                  {%- for hobby in hobbies -%}
-                    {%- if loop.last -%}
-                      and {{ hobby | lower }}
-                    {%- else -%}
-                      {{ " " }}{{ hobby | lower }},{{ " " }}
-                    {%- endif -%}
-                  {%- endfor -%}
-                {%- endif -%}.
-            </p>
         </section>
         <section class="cv-section">
             <h2 class="section-heading">Skills</h2>
-            <div class="skills-grid">
-                {% for skill in cv.skills %}
-                    <div class="skill-category">
-                        <strong class="skill-name">{{ skill.name }}</strong>
-                        <br />
-                        <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-            <hr class="skills-divider" />
+            {% for skill in cv.skills %}
+                <p class="skills-inline">
+                    <strong class="skill-name">{{ skill.name }}</strong>
+                    <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
+                </p>
+            {% endfor %}
             <div class="certifications">
                 <strong class="cert-name">Certifications</strong>
-                <br />
                 <span class="cert-list">
                     {% for cert in cv.certificates %}
                         {{ cert.name }}
@@ -97,15 +80,14 @@
                         <span class="job-dates">
                             {%- set start_parts = job.startDate | split(pat="-") -%} {%- set
                             start_month = start_parts[1] | int - 1 -%} {{ months[start_month] }}
-                            {{ start_parts[0] }} - {%- if job.endDate %} {%- set end_parts = job.endDate | split(pat="-") -%} {%- set end_month = end_parts[1] |
-                             int - 1 %} {{ months[end_month] }} {{ end_parts[0] }} {%- else -%}
-                            Present {%- endif -%}
+                            {{ start_parts[0] }} - {% if job.endDate %}{% set end_parts = job.endDate | split(pat="-") %}{% set end_month = end_parts[1] |
+                             int - 1 %}{{ months[end_month] }} {{ end_parts[0] }}{% else %}Present{% endif %}
                         </span>
                     </div>
-                    {% if job.summary %}<p class="job-summary">{{ job.summary | safe }}</p>{% endif %}
+                    {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
                     {% if job.highlights %}
                         <ul class="job-highlights">
-                            {% for highlight in job.highlights %}<li>{{ highlight | safe }}</li>{% endfor %}
+                            {% for highlight in job.highlights %}<li>{{ highlight }}</li>{% endfor %}
                         </ul>
                     {% endif %}
                 </div>
