@@ -1,128 +1,95 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json
 certificates:
-  - name: Red Hat Certified System Administrator (RHCSA)
   - name: "Azure AZ-700: Designing and Implementing Azure Networking Solutions"
+    date: "2024-01"
 
 basics:
   name: Alex Wicks
   email: alex+cv@awicks.io
   phone: "+44 7484 6166 43"
   summary: >
-    Senior platform and site reliability engineer with deep expertise in bare-metal
-    Kubernetes, platform engineering, and hybrid infrastructure. Builds and operates
-    production-grade platforms used by hundreds of engineers, with a track record of
-    improving reliability, delivery speed, security, and cost across on-premises and
-    cloud environments.
+    Senior platform and site reliability engineer with a track record of designing and
+    operating production infrastructure at scale — from bare-metal Kubernetes and GPU
+    clusters to hybrid networking and internal developer platforms. Own the full stack:
+    from low-level systems to the tooling and pipelines engineers depend on daily.
   location:
     city: London
-    countryCode: GB
+    countryCode: UK
   profiles:
     - network: GitHub
-      username: aw1cks
+      username: github.com/aw1cks
       url: https://github.com/aw1cks
 
 work:
   - name: Maven Securities
     position: Platform Engineer
     startDate: "2024-06"
-    summary: >
-      Own an internal platform spanning Kubernetes, identity, data, and developer tooling
-      for ~100 engineers, improving engineering efficiency and platform reliability.
     highlights:
       - >
-        Implemented automated internal PKI with ACME and step-ca, establishing TLS for
-        hundreds of applications outside Kubernetes and eliminating manual certificate renewals.
+        Own an internal platform spanning Kubernetes, identity, data, and developer tooling
+        for ~100 engineers.
       - >
-        Migrated Kafka-based logging pipelines onto Kubernetes with Strimzi, reducing
-        ingestion lag from hours to minutes and eliminating node backpressure and disk pressure.
+        Implemented automated internal PKI with ACME and step-ca, establishing TLS for hundreds of
+        applications outside Kubernetes and eliminating manual certificate renewals.
       - >
-        Led a major modernisation of the internal identity platform, upgrading a legacy
-        non-HA Keycloak deployment onto Kubernetes with CloudNativePG, Keycloak Operator,
-        Envoy Gateway, and Kerberos/SPNEGO integration for ~200 users and hundreds of applications,
-        improving resilience and security.
+        Migrated Kafka-based logging pipelines onto Kubernetes with Strimzi, cutting ingestion lag from
+        hours to minutes and eliminating node and disk pressure.
       - >
         Deployed an on-premises data platform with VAST S3, Hive metastore,
-        Lakekeeper, and Trino, replacing AWS Athena to save $200k+/year while improving
-        query performance and data freshness for heavily queried exchange data.
+        Lakekeeper, and Trino, replacing AWS Athena to save $200k+/year and improve query performance
+        and data freshness for heavily queried exchange data.
       - >
-        Extended internal Kotlin-based TeamCity CI tooling to standardise delivery
-        workflows for Python and Docker services, reduce pipeline boilerplate, and add
-        opinionated delivery guardrails.
+        Extended internal Kotlin-based TeamCity CI tooling to standardise delivery workflows for Python
+        and Docker services, reduce boilerplate, and add delivery guardrails.
 
   - name: Speechmatics
     position: Senior Site Reliability Engineer
     startDate: "2023-01"
     endDate: "2024-04"
-    summary: >
-      Owned on-premises reliability across networking, VMware, storage, and AI
-      training capacity, supporting production services and research workloads.
     highlights:
       - >
-        Built high-performance bare-metal GPU clusters using NVIDIA H100 and A100
-        systems for AI training workloads, including patching Sun Grid Engine to support
-        Ubuntu 22.04, enabling larger-model training capacity and more frequent refits.
+        Built high-performance bare-metal GPU clusters using NVIDIA H100 and A100 systems for AI training
+        workloads, which included patching Sun Grid Engine for Ubuntu 22.04 compatibility.
       - >
-        Replaced manual SaaS release processes with a GitOps pipeline supporting
-        blue/green and canary deployments across multiple clusters, reducing release
-        time from days to hours and removing manual deployment risk.
+        Replaced manual SaaS release processes with a GitOps pipeline supporting blue/green and canary
+        deployments across multiple clusters, reducing release time from days to hours.
       - >
         Led a datacentre migration to a new colocation, coordinating infrastructure
-        changes while maintaining service continuity and unlocking the power and cooling
-        capacity required for newer GPU clusters.
+        changes while maintaining service continuity and unlocking power and cooling capacity for newer
+        GPU clusters.
       - >
-        Designed and implemented hybrid networking from scratch using Megaport and
-        ExpressRoute, alongside split-horizon DNS, to connect cloud and on-premises environments.
+        Designed and implemented hybrid networking from scratch using Megaport and ExpressRoute,
+        alongside split-horizon DNS, to connect cloud and on-premises environments.
 
   - name: Speechmatics
     position: Site Reliability Engineer
     startDate: "2022-01"
     endDate: "2023-01"
-    summary: >
-      Supported internal AI research and training platforms used by ~50 engineers
-      and researchers.
     highlights:
       - >
-        Managed infrastructure deployments with GitLab CI and Terraform, building
-        reusable modules and Terratest-based conformance checks to support teams
-        self-serving infrastructure changes.
+        Supported internal AI research and training platforms used by ~50 engineers and researchers.
       - >
-        Built and operated observability and network diagnostics tooling, including
-        blackbox monitoring, SNMP, and LLDP-based visibility, improving fault detection
-        and troubleshooting across internal research infrastructure.
-
-  - name: "Capgemini — HMRC Market Unit"
-    position: "Platform Engineer — Metrics & Monitoring"
-    startDate: "2021-07"
-    endDate: "2021-12"
-    summary: >
-      Built a metrics and monitoring platform for HMRC AWS infrastructure across
-      two regions, improving observability coverage and operational visibility.
-    highlights:
+        Managed infrastructure deployments with GitLab CI and Terraform, building reusable modules and
+        Terratest-based conformance checks for self-service infrastructure changes.
       - >
-        Implemented Thanos for Prometheus aggregation and long-term retention,
-        providing unified observability across the estate.
-      - >
-        Deployed blackbox monitoring for services including Consul and Vault,
-        improving fault detection and supporting SLA compliance.
+        Built and operated observability and network diagnostics tooling, including blackbox monitoring,
+        SNMP, and LLDP-based visibility, improving fault detection and troubleshooting.
 
   - name: Flextrade
     position: DevOps Engineer
     startDate: "2019-03"
     endDate: "2021-07"
-    summary: >
-      Built and improved internal delivery infrastructure, with a focus on
-      Kubernetes-based CI/CD and release automation.
     highlights:
       - >
-        Created bare-metal Kubernetes clusters with PXE automation and migrated
-        CI/CD workloads to Kubernetes, reducing build times by 40%.
+        Created bare-metal Kubernetes clusters with PXE automation and migrated CI/CD workloads to
+        Kubernetes, reducing build times by 40%.
       - >
-        Designed a Jenkins-based continuous delivery system that automated previously
-        manual releases, reducing operational effort and improving release repeatability.
+        Designed a Jenkins and Python continuous delivery system that automated previously manual releases
+        and improved repeatability.
 
 skills:
-  - name: Core
+  - name: Specialisms
     keywords:
       - Bare-metal Kubernetes
       - Developer Platforms
@@ -137,12 +104,42 @@ skills:
       - VMware
       - AWS
       - Azure
-  - name: Tooling & Languages
+  - name: Tooling
     keywords:
       - GitLab CI
+      - Helm
       - ArgoCD
       - Prometheus
       - OpenTelemetry
-      - Go
+      - Nix
+  - name: Languages
+    keywords:
       - Python
+      - Go
       - Rust
+
+projects:
+  - name: Keycloak Identity Operator
+    description: >
+      Modernised a legacy non-HA Keycloak deployment onto Kubernetes with CloudNativePG, Keycloak
+      Operator, and Envoy Gateway, including Kerberos/SPNEGO integration. Built an internal operator
+      to manage clients, scopes, and Active Directory group mappings declaratively.
+    highlights:
+      - Implemented declarative client and scope management to reduce manual identity configuration work.
+      - Automated AD group creation and mapping, then rewrote the service from Go to Rust.
+    startDate: "2025-06"
+  - name: Cilium BGP Exporter
+    description: >
+      Internal Go service exposing detailed Cilium BGP route advertisement metrics for platform network
+      observability.
+    highlights:
+      - Built custom metrics to make route propagation and advertisement behaviour visible in Prometheus.
+      - Used by the platform team to diagnose routing issues beyond what upstream tooling exposed.
+    startDate: "2024-11"
+  - name: Golden Image Pipeline
+    description: >
+      Python-based appliance and golden image build pipeline replacing Packer for internal image creation.
+    highlights:
+      - Cut build times from about an hour to five minutes using Ubuntu cloud images and a thin customisation pass.
+      - Added pytest-based validation to make image builds faster and more reliable.
+    startDate: "2023-07"

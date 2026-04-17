@@ -41,26 +41,8 @@
             </div>
         </header>
         <section class="cv-section">
-            <h2 class="section-heading">About Me</h2>
+            <h2 class="section-heading">Profile</h2>
             <p class="summary">{{ cv.basics.summary }}</p>
-        </section>
-        <section class="cv-section">
-            <h2 class="section-heading">Skills</h2>
-            {% for skill in cv.skills %}
-                <p class="skills-inline">
-                    <strong class="skill-name">{{ skill.name }}</strong>
-                    <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
-                </p>
-            {% endfor %}
-            <div class="certifications">
-                <strong class="cert-name">Certifications</strong>
-                <span class="cert-list">
-                    {% for cert in cv.certificates %}
-                        {{ cert.name }}
-                        {% if not loop.last %}&bull;{% endif %}
-                    {% endfor %}
-                </span>
-            </div>
         </section>
         <section class="cv-section">
             <h2 class="section-heading">Experience</h2>
@@ -77,14 +59,13 @@
                 <div class="job">
                     <div class="job-header">
                         <strong class="job-title">{{ job.position }}</strong>
+                        <span class="separator">&mdash;</span>
                         <span class="job-dates">
-                            {%- set start_parts = job.startDate | split(pat="-") -%} {%- set
-                            start_month = start_parts[1] | int - 1 -%} {{ months[start_month] }}
-                            {{ start_parts[0] }} - {% if job.endDate %}{% set end_parts = job.endDate | split(pat="-") %}{% set end_month = end_parts[1] |
-                             int - 1 %}{{ months[end_month] }} {{ end_parts[0] }}{% else %}Present{% endif %}
+                            {%- set start_parts = job.startDate | split(pat="-") -%}
+                            {%- set start_month = start_parts[1] | int - 1 -%}
+                            {{ months[start_month] }} {{ start_parts[0] }} – {% if job.endDate %}{%- set end_parts = job.endDate | split(pat="-") -%}{%- set end_month = end_parts[1] | int - 1 -%}{{ months[end_month] }} {{ end_parts[0] }}{% else %}Present{% endif %}
                         </span>
                     </div>
-                    {% if job.summary %}<p class="job-summary">{{ job.summary }}</p>{% endif %}
                     {% if job.highlights %}
                         <ul class="job-highlights">
                             {% for highlight in job.highlights %}<li>{{ highlight }}</li>{% endfor %}
@@ -92,6 +73,55 @@
                     {% endif %}
                 </div>
             {% endfor %}
+        </section>
+        {% if cv.projects %}
+            <section class="cv-section">
+                <h2 class="section-heading">Selected Projects</h2>
+                {% for project in cv.projects %}
+                    <div class="job">
+                        <div class="job-header">
+                            <strong class="job-title">{{ project.name }}</strong>
+                            {% if project.endDate or project.startDate %}
+                                <span class="separator">&mdash;</span>
+                                <span class="job-dates">
+                                    {% if project.startDate %}
+                                        {%- set start_parts = project.startDate | split(pat="-") -%}
+                                        {{ start_parts[0] }}
+                                    {% endif %}
+                                    {% if project.endDate %}
+                                        {%- set end_parts = project.endDate | split(pat="-") -%}
+                                        – {{ end_parts[0] }}
+                                    {% endif %}
+                                </span>
+                            {% endif %}
+                        </div>
+                        {% if project.description %}<p class="job-summary">{{ project.description }}</p>{% endif %}
+                        {% if project.highlights %}
+                            <ul class="job-highlights">
+                                {% for highlight in project.highlights %}<li>{{ highlight }}</li>{% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </section>
+        {% endif %}
+        <section class="cv-section">
+            <h2 class="section-heading">Skills</h2>
+            {% for skill in cv.skills %}
+                <p class="skills-inline">
+                    <strong class="skill-name">{{ skill.name }}</strong>
+                    <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
+                </p>
+            {% endfor %}
+            <div class="certifications">
+                <strong class="cert-name">Certifications</strong>
+                <span class="cert-list">
+                    {% for cert in cv.certificates %}
+                        {{ cert.name }}{% if cert.date %} ({{ cert.date | split(pat="-") | first }}){% endif %}
+                        {% if not loop.last %}&bull;{% endif %}
+                    {% endfor %}
+                </span>
+            </div>
         </section>
     </body>
 </html>
