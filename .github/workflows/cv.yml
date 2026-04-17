@@ -42,6 +42,15 @@ jobs:
             --accept-flake-config \
             --keep-going
 
+      - name: Upload ATS extraction artifact
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ats-extracted-text
+          path: result/ats/extracted.txt
+          if-no-files-found: ignore
+          retention-days: 7
+
   deploy:
     name: Deploy to GitHub Pages
     needs: check

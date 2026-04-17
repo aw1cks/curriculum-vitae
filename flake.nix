@@ -99,8 +99,50 @@
                     exit 1
                   fi
 
-                  # Touch $out so the derivation succeeds
-                  touch $out
+                   # Touch $out so the derivation succeeds
+                   touch $out
+                '';
+            ats =
+              pkgs.runCommand "ats-check"
+                {
+                  buildInputs = [
+                    pkgs.zola
+                    pkgs.python3Packages.weasyprint
+                    pkgs.poppler-utils
+                  ];
+                  FONTCONFIG_FILE = toString fontConfig;
+                }
+                ''
+                  cp -r ${./.} source
+                  chmod -R u+w source
+                  cd source
+
+                  zola build
+                  weasyprint public/index.html public/cv.pdf
+                  pdftotext public/cv.pdf extracted.txt
+
+                  if ! grep -q "Alex Wicks" extracted.txt; then
+                    echo "ATS check failed: missing candidate name in extracted text"
+                    exit 1
+                  fi
+
+                  if ! grep -iq "Experience" extracted.txt; then
+                    echo "ATS check failed: missing Experience heading in extracted text"
+                    exit 1
+                  fi
+
+                  if grep -Eq '^•[[:space:]]*$' extracted.txt; then
+                    echo "ATS check failed: found orphan bullet markers in extracted text"
+                    exit 1
+                  fi
+
+                  if grep -Eq '^•([[:space:]]*•)+[[:space:]]*$' extracted.txt; then
+                    echo "ATS check failed: found repeated orphan bullet markers in extracted text"
+                    exit 1
+                  fi
+
+                  mkdir -p $out
+                  cp extracted.txt $out/
                 '';
           };
 
