@@ -4,12 +4,12 @@
   --fg: #1a1a1a;
   --fg-muted: #4b5563;
   --rule: #d1d5db;
-  --icon-size: 13px;
+  --icon-size: 15px;
 }
 
 @page {
   size: A4;
-  margin: 1cm 1.5cm;
+  margin: 0.8cm 1.5cm;
 }
 
 * {
@@ -39,23 +39,25 @@ a {
 }
 
 .cv-heading {
-  margin-bottom: 0.4em;
+  margin-bottom: 0.3em;
 }
 
 .cv-name {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 20pt;
+  font-size: 25pt;
   font-weight: 700;
   color: var(--fg);
   margin: 0;
   line-height: 1;
+  margin-bottom: 0.05em;
 }
 
 .contacts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.8em;
+  gap: 1.2em;
   margin-top: -0.25em;
+  margin-bottom: -0.5em;
 }
 
 .contact-entry {
@@ -80,7 +82,7 @@ a {
 }
 
 .cv-section {
-  margin-top: 1.5em;
+  margin-top: 1.1em;
 }
 
 .section-heading {
@@ -138,7 +140,7 @@ a {
   font-size: 9.5pt;
   font-weight: 700;
   color: var(--accent-muted);
-  margin: 0.5em 0 0.1em;
+  margin: 0.3em 0 0.1em;
 }
 
 .section-heading + .company-name {
@@ -147,26 +149,33 @@ a {
 
 .job {
   margin-left: 0.75em;
-  margin-bottom: 0.8em;
+  margin-bottom: 0.5em;
 }
 
 .job-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: baseline;
+  gap: 0.25em;
   margin: 0.15em 0;
 }
 
-.job-title {
+.separator {
   color: var(--fg-muted);
-  font-weight: 700;
-  font-size: 8pt;
+  font-weight: 400;
+}
+
+.job-title {
+  color: var(--fg);
+  font-size: 8.5pt;
+  font-weight: 800;
+  font-style: italic;
 }
 
 .job-dates {
+  color: var(--fg-muted);
   font-size: 8pt;
   font-weight: 400;
-  color: var(--fg-muted);
   white-space: nowrap;
 }
 
@@ -184,7 +193,7 @@ a {
 }
 
 .job-highlights li {
-  margin-bottom: 0.25em;
+  margin-bottom: 0.15em;
   line-height: 1.3;
 }
 
@@ -234,13 +243,14 @@ a {
 
 @media screen {
   .contacts {
-    margin-top: 0.15em;
+    margin-top: 0.3em;
   }
 }
 
 @media print {
   .cv-section {
     break-inside: auto;
+    margin-top: 0.9em;
   }
   .company-name {
     break-after: avoid;
@@ -251,32 +261,19 @@ a {
   .job {
     break-inside: auto;
     page-break-inside: auto;
-  }
-  .job-header {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-  }
-  .job-title,
-  .job-dates {
-    display: table-cell;
-    vertical-align: baseline;
-  }
-  .job-dates {
-    text-align: right;
-    padding-left: 0.75em;
+    margin-bottom: 0.35em;
   }
   .job + .job {
     margin-top: 0.2em;
   }
   .job-summary,
-  .job-highlights,
   .job-highlights li {
     break-inside: avoid;
     page-break-inside: avoid;
   }
   .section-heading {
     break-after: avoid;
+    margin-top: 0.2em;
   }
   .skills-inline,
   .certifications {
