@@ -146,16 +146,27 @@
                 '';
           };
 
-          apps.default = {
-            type = "app";
-            program = toString (
-              pkgs.writeShellScript "build-cv" ''
-                export FONTCONFIG_FILE=${fontConfig}
-                ${pkgs.zola}/bin/zola build
-                ${pkgs.python3Packages.weasyprint}/bin/weasyprint public/index.html cv.pdf
-                echo "Built cv.pdf successfully."
-              ''
-            );
+          apps = {
+            default = {
+              type = "app";
+              program = toString (
+                pkgs.writeShellScript "build-cv" ''
+                  export FONTCONFIG_FILE=${fontConfig}
+                  ${pkgs.zola}/bin/zola build
+                  ${pkgs.python3Packages.weasyprint}/bin/weasyprint public/index.html cv.pdf
+                  echo "Built cv.pdf successfully."
+                ''
+              );
+            };
+            serve = {
+              type = "app";
+              program = toString (
+                pkgs.writeShellScript "serve" ''
+                  export FONTCONFIG_FILE=${fontConfig}
+                  ${pkgs.zola}/bin/zola serve --extra-watch-path cv.yaml --open
+                ''
+              );
+            };
           };
 
           devShells.default = pkgs.mkShell {
