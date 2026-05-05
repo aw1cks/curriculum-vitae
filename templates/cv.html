@@ -59,7 +59,6 @@
                 <div class="job">
                     <div class="job-header">
                         <strong class="job-title">{{ job.position }}</strong>
-                        <span class="separator">&mdash;</span>
                         <span class="job-dates">
                             {%- set start_parts = job.startDate | split(pat="-") -%}
                             {%- set start_month = start_parts[1] | int - 1 -%}
@@ -109,12 +108,12 @@
             <h2 class="section-heading">Skills</h2>
             {% for skill in cv.skills %}
                 <p class="skills-inline">
-                    <strong class="skill-name">{{ skill.name }}</strong>
+                    <strong class="skill-name">{{ skill.name }}:</strong>
                     <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
                 </p>
             {% endfor %}
             <div class="certifications">
-                <strong class="cert-name">Certifications</strong>
+                <strong class="cert-name">Certifications:</strong>
                 <span class="cert-list">
                     {% for cert in cv.certificates %}
                         {{ cert.name }}{% if cert.date %} ({{ cert.date | split(pat="-") | first }}){% endif %}
