@@ -169,14 +169,14 @@ a {
   color: var(--fg);
   font-size: 8.5pt;
   font-weight: 800;
-  font-style: italic;
 }
 
 .job-dates {
   color: var(--fg-muted);
-  font-size: 8pt;
-  font-weight: 400;
+  font-size: 7pt;
+  font-weight: 500;
   white-space: nowrap;
+  font-style: italic;
 }
 
 .job-summary {
