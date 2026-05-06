@@ -9,10 +9,10 @@ basics:
   email: alex+cv@awicks.io
   phone: "+44 7484 6166 43"
   summary: >
-    Senior platform and site reliability engineer with a track record of designing and
-    operating production infrastructure at scale — from bare-metal Kubernetes and GPU
-    clusters to hybrid networking and internal developer platforms. Own the full stack:
-    from low-level systems to the tooling and pipelines engineers depend on daily.
+    Senior platform and site reliability engineer. I design, build and operate production
+    infrastructure at scale — bare-metal Kubernetes, GPU clusters, hybrid networking,
+    internal developer platforms. From low-level systems to developer tooling: I own
+    the full stack.
   location:
     city: London
     countryCode: UK
@@ -30,18 +30,20 @@ work:
         Own an internal platform spanning Kubernetes, identity, data, and developer tooling
         for ~100 engineers.
       - >
+        Ran in-house training courses for our engineers on Kubernetes and our platform,
+        helping them onboard and self-serve.
+      - >
         Implemented automated internal PKI with ACME and step-ca, establishing TLS for hundreds of
         applications outside Kubernetes and eliminating manual certificate renewals.
       - >
         Migrated Kafka-based logging pipelines onto Kubernetes with Strimzi, cutting ingestion lag from
         hours to minutes and eliminating node and disk pressure.
       - >
-        Deployed an on-premises data platform with VAST S3, Hive metastore,
-        Lakekeeper, and Trino, replacing AWS Athena to save $200k+/year and improve query performance
-        and data freshness for heavily queried exchange data.
+        Deployed an on-premises data platform (VAST S3, Hive, Lakekeeper, Trino), replacing
+        Athena to save $200k+/year and improve query performance on exchange data.
       - >
-        Extended internal Kotlin-based TeamCity CI tooling to standardise delivery workflows for Python
-        and Docker services, reduce boilerplate, and add delivery guardrails.
+        Extended internal Kotlin-based TeamCity CI tooling to standardise delivery for Python
+        and Docker services, reducing boilerplate and adding delivery guardrails.
 
   - name: Speechmatics
     position: Senior Site Reliability Engineer
@@ -68,13 +70,15 @@ work:
     endDate: "2023-01"
     highlights:
       - >
-        Supported internal AI research and training platforms used by ~50 engineers and researchers.
+        Supported internal AI research and training platforms used by ~50 engineers and ML researchers.
       - >
-        Managed infrastructure deployments with GitLab CI and Terraform, building reusable modules and
-        Terratest-based conformance checks for self-service infrastructure changes.
+        Managed infrastructure with GitLab CI and Terraform, building reusable modules and
+        Terratest conformance checks for self-service changes.
       - >
         Built and operated observability and network diagnostics tooling, including blackbox monitoring,
-        SNMP, and LLDP-based visibility, improving fault detection and troubleshooting.
+        SNMP, and LLDP, improving fault detection and troubleshooting.
+      - >
+        Defined SLIs and SLOs for internal platform components, enabling better on-call prioritisation.
 
   - name: Flextrade
     position: DevOps Engineer
@@ -87,6 +91,10 @@ work:
       - >
         Designed a Jenkins and Python continuous delivery system that automated previously manual releases
         and improved repeatability.
+      - >
+        Participated in 24/7/365 on-call and incident response for networking, VMware, Windows, and Linux
+        infrastructure across systems used by ~300 engineers, later transitioning to a follow-the-sun
+        rotation model.
 
 skills:
   - name: Specialisms
@@ -97,21 +105,38 @@ skills:
       - PKI
       - Identity
       - Observability
-  - name: Infrastructure
+  - name: Platform & Infra
     keywords:
-      - Terraform
-      - Linux
-      - VMware
-      - AWS
-      - Azure
-  - name: Tooling
-    keywords:
-      - GitLab CI
+      - Kubernetes
+      - Docker
       - Helm
       - ArgoCD
+      - Envoy Gateway
+      - Linux
+      - Nix
+      - AWS
+      - Azure
+      - VMware
+  - name: Automation & CI/CD
+    keywords:
+      - Terraform
+      - Ansible
+      - Packer
+      - GitLab CI
+      - GitHub Actions
+      - Jenkins
+      - TeamCity
+  - name: Networking & Observability
+    keywords:
+      - Cilium
+      - Vault
       - Prometheus
       - OpenTelemetry
-      - Nix
+      - Grafana
+      - ClickHouse
+      - S3
+      - PostgreSQL
+      - Kafka
   - name: Languages
     keywords:
       - Python
@@ -121,25 +146,29 @@ skills:
 projects:
   - name: Keycloak Identity Operator
     description: >
-      Modernised a legacy non-HA Keycloak deployment onto Kubernetes with CloudNativePG, Keycloak
-      Operator, and Envoy Gateway, including Kerberos/SPNEGO integration. Built an internal operator
-      to manage clients, scopes, and Active Directory group mappings declaratively.
+      Built an internal Kubernetes operator for declarative management of Keycloak clients, scopes, and
+      AD group mappings — modernising a legacy non-HA Keycloak onto CloudNativePG, Keycloak Operator,
+      Envoy Gateway, and Kerberos/SPNEGO integration.
     highlights:
-      - Implemented declarative client and scope management to reduce manual identity configuration work.
-      - Automated AD group creation and mapping, then rewrote the service from Go to Rust.
+      - >
+        Rewrote the operator from Go to Rust — stronger type safety catches configuration
+        errors at compile time, making the codebase safer to evolve.
+      - Eliminated manual identity configuration through declarative client, scope, and AD group mapping management.
+      - Automated AD group creation and mapping, replacing ad-hoc scripts with version-controlled configuration.
     startDate: "2025-06"
-  - name: Cilium BGP Exporter
-    description: >
-      Internal Go service exposing detailed Cilium BGP route advertisement metrics for platform network
-      observability.
-    highlights:
-      - Built custom metrics to make route propagation and advertisement behaviour visible in Prometheus.
-      - Used by the platform team to diagnose routing issues beyond what upstream tooling exposed.
-    startDate: "2024-11"
   - name: Golden Image Pipeline
     description: >
-      Python-based appliance and golden image build pipeline replacing Packer for internal image creation.
+      Python-based golden image pipeline replacing Packer for internal image builds.
     highlights:
       - Cut build times from about an hour to five minutes using Ubuntu cloud images and a thin customisation pass.
       - Added pytest-based validation to make image builds faster and more reliable.
     startDate: "2023-07"
+  - name: OpenConnect Docker Container
+    description: >
+      Dockerized AnyConnect VPN client with automated OTP support, multi-arch images, and
+      CI/CD publishing to three container registries.
+    url: https://github.com/aw1cks/openconnect
+    highlights:
+      - 131 GitHub stars, solving a common pain point for AnyConnect users.
+      - Multi-arch images (amd64 + arm64) built and published to Docker Hub, GHCR, and Quay.io via automated CI/CD.
+    startDate: "2021-06"
