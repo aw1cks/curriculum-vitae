@@ -79,7 +79,7 @@
                 {% for project in cv.projects %}
                     <div class="job">
                         <div class="job-header">
-                            <strong class="job-title">{{ project.name }}</strong>
+                            <strong class="job-title">{% if project.url %}<a href="{{ project.url }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</strong>
                             {% if project.endDate or project.startDate %}
                                 <span class="separator">&mdash;</span>
                                 <span class="job-dates">
@@ -112,9 +112,9 @@
                     <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
                 </p>
             {% endfor %}
-            <div class="certifications">
-                <strong class="cert-name">Certifications:</strong>
-                <span class="cert-list">
+            <div class="skills-inline">
+                <strong class="skill-name">Certifications:</strong>
+                <span class="skill-keywords">
                     {% for cert in cv.certificates %}
                         {{ cert.name }}{% if cert.date %} ({{ cert.date | split(pat="-") | first }}){% endif %}
                         {% if not loop.last %}&bull;{% endif %}
