@@ -9,7 +9,7 @@
 
 @page {
   size: A4;
-  margin: 0.8cm 1.5cm;
+  margin: 1cm 1.4cm;
 }
 
 * {
@@ -82,12 +82,12 @@ a {
 }
 
 .cv-section {
-  margin-top: 1.1em;
+  margin-top: 0.7em;
 }
 
 .section-heading {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 13pt;
+  font-size: 12pt;
   font-weight: 700;
   color: var(--accent);
   text-transform: uppercase;
@@ -117,22 +117,6 @@ a {
 }
 
 .skill-keywords {
-  font-size: 8pt;
-}
-
-.certifications {
-  margin-top: 0.1em;
-  font-size: 8pt;
-}
-
-.cert-name {
-  color: var(--accent-muted);
-  font-weight: 700;
-  font-size: 8pt;
-  margin-right: 0.35em;
-}
-
-.cert-list {
   font-size: 8pt;
 }
 
@@ -169,6 +153,13 @@ a {
   color: var(--fg);
   font-size: 8.5pt;
   font-weight: 800;
+}
+
+.job-title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
 }
 
 .job-dates {
@@ -252,35 +243,131 @@ a {
 }
 
 @media print {
+  .cv-heading {
+    margin-bottom: 0.2em;
+  }
+
+  .cv-name {
+    font-size: 22pt;
+    margin-bottom: 0.04em;
+  }
+
+  .contacts {
+    gap: 0.8em;
+    margin-top: -0.1em;
+    margin-bottom: -0.2em;
+  }
+
+  body {
+    font-size: 8pt;
+    line-height: 1.4;
+  }
+
+  .summary {
+    font-size: 8pt;
+    line-height: 1.35;
+    margin: 0.2em 0 0.1em;
+  }
+
   .cv-section {
     break-inside: auto;
-    margin-top: 0.9em;
+    margin-top: 0.4em;
+  }
+  .section-heading {
+    font-size: 11pt;
+    break-after: avoid;
+    margin-top: 0.12em;
+    margin-bottom: 0;
+    padding-bottom: 0.1em;
   }
   .company-name {
     break-after: avoid;
+    font-size: 8.5pt;
+    margin: 0.15em 0 0.08em;
+  }
+  .job {
+    margin-bottom: 0.18em;
+    margin-left: 0.6em;
+  }
+  .job + .job {
+    margin-top: 0.08em;
   }
   .job-header {
     break-after: avoid;
+    margin: 0.1em 0;
+  }
+  .job-title {
+    font-size: 8pt;
+  }
+  .job-dates {
+    font-size: 6.5pt;
+  }
+  .job-summary {
+    font-size: 8pt;
+    margin: 0.1em 0;
+    line-height: 1.3;
+  }
+  .job-highlights {
+    margin-top: 0.05em;
+    margin-left: 1em;
+  }
+  .job-highlights li {
+    margin-bottom: 0.1em;
+    line-height: 1.3;
+  }
+  .skills-inline {
+    font-size: 8pt;
+    line-height: 1.3;
+    margin: 0.12em 0 0.06em;
+  }
+  .skill-name {
+    font-size: 8pt;
+  }
+  .company-name {
+    break-after: avoid;
+    font-size: 8.5pt;
+    margin: 0.15em 0 0.08em;
   }
   .job {
-    break-inside: auto;
-    page-break-inside: auto;
-    margin-bottom: 0.35em;
+    margin-bottom: 0.18em;
+    margin-left: 0.6em;
   }
   .job + .job {
-    margin-top: 0.2em;
+    margin-top: 0.08em;
   }
-  .job-summary,
-  .job-highlights li {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-  .section-heading {
+  .job-header {
     break-after: avoid;
-    margin-top: 0.2em;
+    margin: 0.1em 0;
   }
-  .skills-inline,
+  .job-title {
+    font-size: 8pt;
+  }
+  .job-dates {
+    font-size: 6.5pt;
+  }
+  .job-summary {
+    font-size: 8pt;
+    margin: 0.1em 0;
+    line-height: 1.3;
+  }
+  .job-highlights {
+    margin-top: 0.05em;
+    margin-left: 1em;
+  }
+  .job-highlights li {
+    margin-bottom: 0.1em;
+    line-height: 1.3;
+  }
+  .skills-inline {
+    font-size: 8pt;
+    line-height: 1.3;
+    margin: 0.12em 0 0.06em;
+  }
+  .skill-name {
+    font-size: 8pt;
+  }
   .certifications {
-    break-inside: avoid;
+    font-size: 8pt;
+    margin-top: 0.06em;
   }
 }
