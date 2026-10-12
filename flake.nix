@@ -55,6 +55,7 @@
               pkgs.python3Packages.weasyprint
             ];
             FONTCONFIG_FILE = toString fontConfig;
+            SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
             buildPhase = ''
               zola build
               weasyprint public/index.html public/cv.pdf
@@ -111,6 +112,7 @@
                     pkgs.poppler-utils
                   ];
                   FONTCONFIG_FILE = toString fontConfig;
+                  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
                 }
                 ''
                   cp -r ${./.} source
