@@ -3,6 +3,10 @@
   extends: ["config:recommended"],
   lockFileMaintenance: {
     enabled: true,
+    automerge: true,
+    automergeType: "pr",
+    platformAutomerge: true,
+    automergeStrategy: "rebase",
     extends: ["schedule:weekly"],
   },
   nix: {
