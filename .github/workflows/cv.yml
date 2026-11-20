@@ -42,12 +42,18 @@ jobs:
             --accept-flake-config \
             --keep-going
 
+      - name: Build ATS extraction output
+        run: |
+          nix build .#checks.x86_64-linux.ats \
+            --accept-flake-config \
+            -o result-ats
+
       - name: Upload ATS extraction artifact
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: ats-extracted-text
-          path: result/ats/extracted.txt
+          path: result-ats/extracted.txt
           if-no-files-found: ignore
           retention-days: 7
 
