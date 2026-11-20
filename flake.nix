@@ -91,7 +91,7 @@
                 }
                 ''
                   # languagetool-commandline doesn't support -p in all versions/wrappers. Let's disable the spell checker specifically for tech terms instead
-                  languagetool-commandline -l en-GB -d WHITESPACE_RULE,UPPERCASE_SENTENCE_START,ARROWS,MORFOLOGIK_RULE_EN_GB,NUMBERS_IN_WORDS,OXFORD_SPELLING_Z_NOT_S ${./cv.yaml} > output.txt || true
+                  languagetool-commandline -l en-GB -d WHITESPACE_RULE,UPPERCASE_SENTENCE_START,ARROWS,MORFOLOGIK_RULE_EN_GB,NUMBERS_IN_WORDS,OXFORD_SPELLING_Z_NOT_S ${./cv.yaml} > output.txt
 
                   # We grep for 'Rule ID' to see if there were actual grammar errors
                   if grep -q "Rule ID:" output.txt; then
@@ -100,8 +100,8 @@
                     exit 1
                   fi
 
-                   # Touch $out so the derivation succeeds
-                   touch $out
+                  # Touch $out so the derivation succeeds
+                  touch $out
                 '';
             ats =
               pkgs.runCommand "ats-check"
@@ -178,6 +178,8 @@
               pkgs.poppler-utils
               fonts
               pkgs.fontconfig
+              pkgs.languagetool
+              config.treefmt.build.wrapper
             ];
 
             FONTCONFIG_FILE = toString fontConfig;
