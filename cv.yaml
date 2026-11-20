@@ -1,24 +1,33 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json
 certificates:
-  - name: "Azure AZ-700: Designing and Implementing Azure Networking Solutions"
+  - name: Red Hat RHCSA
+    expired: true
+  - name: Microsoft Azure AZ-700
     date: "2024-01"
+    expired: true
+  - name: AWS Certified Cloud Practitioner
+    expired: true
 
 basics:
   name: Alex Wicks
+  label: Senior Infrastructure & Systems Engineer
   email: alex+cv@awicks.io
-  phone: "+44 7484 6166 43"
+  phone: "+44 7484 616643"
+  url: https://cv.awicks.io
   summary: >
-    Senior platform and site reliability engineer. I design, build and operate production
-    infrastructure at scale — bare-metal Kubernetes, GPU clusters, hybrid networking,
-    internal developer platforms. From low-level systems to developer tooling: I own
-    the full stack.
+    Infrastructure and systems engineer with 7+ years designing, building, and operating Linux,
+    Kubernetes, GPU compute, and networking platforms across AI and financial services. Focused on
+    complex cross-layer systems engineering — from kernel internals and CPU scheduling to
+    distributed infrastructure — combining deep operational expertise with practical software
+    development in Rust, Go, Python, and Kotlin. Experienced in platform architecture, technical
+    leadership, and building reusable capabilities adopted across engineering teams.
   location:
     city: London
-    countryCode: UK
+    countryCode: GB
   profiles:
     - network: GitHub
-      username: github.com/aw1cks
+      username: aw1cks
       url: https://github.com/aw1cks
 
 work:
@@ -27,23 +36,34 @@ work:
     startDate: "2024-06"
     highlights:
       - >
-        Own an internal platform spanning Kubernetes, identity, data, and developer tooling
-        for ~100 engineers.
+        Engineer and operate Kubernetes and internal developer platforms across 20+ clusters for ~100
+        engineers, driving architecture, upgrades, and cross-team technical reviews.
       - >
-        Ran in-house training courses for our engineers on Kubernetes and our platform,
-        helping them onboard and self-serve.
+        Diagnosed Linux kernel failures through vmcore forensics and upstream/backport analysis;
+        built custom kernel packaging and CI, delivering improved memory reclaim through MGLRU,
+        reduced kernel memory consumption through folios, and resolution of an eBPF memory leak
+        affecting Cilium.
       - >
-        Implemented automated internal PKI with ACME and step-ca, establishing TLS for hundreds of
-        applications outside Kubernetes and eliminating manual certificate renewals.
+        Architected multi-region LiteLLM gateway infrastructure for regional latency reduction and
+        failover, using Cilium BGP anycast, health-based route withdrawal, horizontal autoscaling,
+        and regional Redis; optimised Kubernetes CPU/NUMA policy and storage for H200-hosted vLLM
+        workloads.
       - >
-        Migrated Kafka-based logging pipelines onto Kubernetes with Strimzi, cutting ingestion lag from
-        hours to minutes and eliminating node and disk pressure.
+        Extended a Go Kubernetes operator across 20+ clusters for Keycloak/AD reconciliation and
+        Envoy Gateway OIDC; built Rust Kerberos/SPNEGO cluster auth tooling.
       - >
-        Deployed an on-premises data platform (VAST S3, Hive, Lakekeeper, Trino), replacing
-        Athena to save $200k+/year and improve query performance on exchange data.
+        Implemented automated internal PKI with step-ca and ACME across hundreds of non-Kubernetes
+        services, eliminating manual certificate renewals.
       - >
-        Extended internal Kotlin-based TeamCity CI tooling to standardise delivery for Python
-        and Docker services, reducing boilerplate and adding delivery guardrails.
+        Built cross-platform Rust CI pipelines (Linux/Windows, Artifactory) in Kotlin TeamCity
+        tooling, adopted by another team for production trading software.
+      - >
+        Diagnosed VMware CPU contention and excessive vNUMA migrations using hypervisor metrics and
+        Linux PSI; optimised VM topology to reduce contention and improve GitHub Enterprise
+        responsiveness.
+      - >
+        Migrated logging to Strimzi/Kafka on Kubernetes (cutting lag from hours to minutes) and
+        deployed VAST S3/Trino/Hive, retiring ~$200k/year in AWS Athena spend.
 
   - name: Speechmatics
     position: Senior Site Reliability Engineer
@@ -51,18 +71,22 @@ work:
     endDate: "2024-04"
     highlights:
       - >
-        Built high-performance bare-metal GPU clusters using NVIDIA H100 and A100 systems for AI training
-        workloads, which included patching Sun Grid Engine for Ubuntu 22.04 compatibility.
+        Integrated NVIDIA H100 nodes into bare-metal AI clusters, including GPU telemetry, Sun Grid
+        Engine source patches, and custom Debian packages for Ubuntu 22.04.
       - >
-        Replaced manual SaaS release processes with a GitOps pipeline supporting blue/green and canary
-        deployments across multiple clusters, reducing release time from days to hours.
+        Reconstructed undocumented on-premises network topology and diagnosed core-switch buffer
+        overruns via Scapy and SNMP, driving uplink and switching-capacity remediation.
       - >
-        Led a datacentre migration to a new colocation, coordinating infrastructure
-        changes while maintaining service continuity and unlocking power and cooling capacity for newer
-        GPU clusters.
+        Led a datacentre migration to a new colocation facility to unlock power and cooling capacity
+        for GPU expansion; delivered internet, firewall, and Azure VPN connectivity in one month via
+        a Megaport-hosted Fortinet appliance, later establishing ExpressRoute for cloud bursting and
+        CI.
       - >
-        Designed and implemented hybrid networking from scratch using Megaport and ExpressRoute,
-        alongside split-horizon DNS, to connect cloud and on-premises environments.
+        Delivered the first end-to-end SaaS release pipeline by assembling GitLab CI, Terraform, and
+        Argo CD into an operational workflow, cutting release effort from days to hours.
+      - >
+        Automated Ubuntu golden images via cloud images, Packer/QEMU, and Python/govc; built
+        unattended Windows 11 images and Ansible provisioning for GitLab CI runners.
 
   - name: Speechmatics
     position: Site Reliability Engineer
@@ -70,105 +94,154 @@ work:
     endDate: "2023-01"
     highlights:
       - >
-        Supported internal AI research and training platforms used by ~50 engineers and ML researchers.
+        Managed a 20–30 host VMware estate running hundreds of VMs and migrated vSAN storage to a
+        Pure SAN, resolving iSCSI, MTU, and I/O contention bottlenecks.
       - >
-        Managed infrastructure with GitLab CI and Terraform, building reusable modules and
-        Terratest conformance checks for self-service changes.
+        Packaged VAST CSI into a Helm chart and built reusable Terraform modules with Terratest
+        conformance checks for self-service infrastructure.
       - >
-        Built and operated observability and network diagnostics tooling, including blackbox monitoring,
-        SNMP, and LLDP, improving fault detection and troubleshooting.
-      - >
-        Defined SLIs and SLOs for internal platform components, enabling better on-call prioritisation.
+        Built network and platform observability tooling (SNMP, LLDP, blackbox monitoring)
+        supporting internal AI research and training platforms for ~50 engineers and ML researchers.
 
-  - name: Flextrade
+  - name: Capgemini — HMRC Market Unit
+    position: Platform Engineer, Metrics & Monitoring
+    startDate: "2021-07"
+    endDate: "2021-12"
+    highlights:
+      - >
+        Engineered centralised Prometheus and Thanos observability across thousands of AWS EC2
+        instances and Kubernetes workloads for long-term metric retention.
+      - >
+        Implemented blackbox monitoring for critical Consul and Vault services and migrated
+        monitoring components from legacy EC2 hosts onto Kubernetes.
+
+  - name: Flextrade Systems
     position: DevOps Engineer
-    startDate: "2019-03"
+    startDate: "2020-08"
     endDate: "2021-07"
     highlights:
       - >
-        Created bare-metal Kubernetes clusters with PXE automation and migrated CI/CD workloads to
-        Kubernetes, reducing build times by 40%.
+        Built bare-metal Kubernetes clusters via PXE automation and migrated CI workloads onto
+        Kubernetes, cutting build times by ~40%.
       - >
-        Designed a Jenkins and Python continuous delivery system that automated previously manual releases
-        and improved repeatability.
+        Designed Jenkins, Python, and Ansible delivery automation replacing manual releases, and
+        supported VMware Cloud on AWS hybrid infrastructure.
+
+  - name: Flextrade Systems
+    position: Systems Administrator
+    startDate: "2020-01"
+    endDate: "2020-08"
+    highlights:
       - >
-        Participated in 24/7/365 on-call and incident response for networking, VMware, Windows, and Linux
-        infrastructure across systems used by ~300 engineers, later transitioning to a follow-the-sun
-        rotation model.
+        Automated VM provisioning with Python tooling, managed vSphere lifecycle upgrades, and
+        mentored junior engineers.
+
+  - name: Flextrade Systems
+    position: Junior Systems Administrator
+    startDate: "2019-03"
+    endDate: "2020-01"
+    highlights:
+      - >
+        Supported multi-region production SaaS infrastructure across Linux, Windows, VMware, storage,
+        networking, Active Directory, databases, and firewalls, including on-call incident response.
+
+projects:
+  - name: cpuhint — Linux CPU Discovery Interposition
+    url: https://github.com/aw1cks/cpuhint
+    keywords:
+      - Rust
+    startDate: "2026"
+    description: >
+      Linux LD_PRELOAD shim aligning glibc CPU-discovery interfaces (sched_getaffinity, sysconf,
+      get_nprocs) with LXCFS container-visible CPU counts; built with a no_std core, fail-open
+      fallbacks, ABI-level tests, and fuzzing.
+  - name: Keycloak — SPNEGO Mutual Authentication
+    url: https://github.com/keycloak/keycloak/pull/51560
+    keywords:
+      - Java
+      - Merged upstream
+    startDate: "2026"
+    description: >
+      Fixed final GSSAPI response-token propagation across Kerberos, LDAP, and HTTP authentication
+      flows, with integration tests covering mutual authentication and transient credential state.
+  - name: openssh-sftp-protocol — Non-UTF-8 Unix Filenames
+    url: https://github.com/openssh-rust/openssh-sftp-protocol/pull/31
+    keywords:
+      - Rust
+      - Merged upstream
+    startDate: "2026"
+    description: >
+      Fixed Serde Path decoding and request serialisation rejecting valid non-UTF-8 Unix filenames
+      per the SFTP specification, uncovered via fuzz testing.
+  - name: Smallstep — Issuer Validity Enforcement
+    url: https://github.com/smallstep/certificates/pull/2820
+    keywords:
+      - Go
+      - Open contribution
+    startDate: "2026"
+    description: >
+      Proposed issuing-CA chain expiry clamping and warning propagation across X.509 issuance and
+      renewal, with regression coverage and a companion CLI PR.
 
 skills:
-  - name: Specialisms
+  - name: Systems & Compute
     keywords:
-      - Bare-metal Kubernetes
-      - Developer Platforms
-      - Networking
-      - PKI
-      - Identity
-      - Observability
-  - name: Platform & Infra
+      - Linux
+      - kernel debugging (vmcore, cgroups, PSI)
+      - CPU scheduling/NUMA
+      - bare-metal infrastructure
+      - NVIDIA H100/A100/H200
+      - VMware vSphere/vSAN
+      - storage I/O
+  - name: Platforms & Cloud
     keywords:
       - Kubernetes
-      - Docker
+      - Cilium/eBPF
+      - Argo CD
       - Helm
-      - ArgoCD
-      - Envoy Gateway
-      - Linux
-      - Nix
       - AWS
       - Azure
-      - VMware
-  - name: Automation & CI/CD
-    keywords:
       - Terraform
       - Ansible
       - Packer
+      - Docker
+      - TeamCity
       - GitLab CI
       - GitHub Actions
-      - Jenkins
-      - TeamCity
-  - name: Networking & Observability
+      - Nix
+  - name: Networking & Identity
     keywords:
-      - Cilium
-      - Vault
-      - Prometheus
-      - OpenTelemetry
-      - Grafana
-      - ClickHouse
-      - S3
+      - BGP/anycast
+      - TCP/IP
+      - hybrid networking (ExpressRoute, Megaport)
+      - DNS
+      - PKI (step-ca, ACME)
+      - Keycloak
+      - Kerberos/SPNEGO
+      - OIDC
+      - Envoy Gateway
+  - name: Data & Observability
+    keywords:
+      - Kafka/Strimzi
       - PostgreSQL
-      - Kafka
-  - name: Languages
+      - Redis
+      - VAST/S3
+      - Trino
+      - Hive
+      - Prometheus
+      - Thanos
+      - Grafana
+      - OpenTelemetry
+  - name: AI Infrastructure
     keywords:
-      - Python
-      - Go
+      - NVIDIA HGX H200/H100
+      - GPU scheduling (Sun Grid Engine)
+      - vLLM
+      - LiteLLM
+  - name: Programming
+    keywords:
       - Rust
-
-projects:
-  - name: Keycloak Identity Operator
-    description: >
-      Built an internal Kubernetes operator for declarative management of Keycloak clients, scopes, and
-      AD group mappings — modernising a legacy non-HA Keycloak onto CloudNativePG, Keycloak Operator,
-      Envoy Gateway, and Kerberos/SPNEGO integration.
-    highlights:
-      - >
-        Rewrote the operator from Go to Rust — stronger type safety catches configuration
-        errors at compile time, making the codebase safer to evolve.
-      - Eliminated manual identity configuration through declarative client, scope, and AD group mapping management.
-      - Automated AD group creation and mapping, replacing ad-hoc scripts with version-controlled configuration.
-    startDate: "2025-06"
-  - name: Golden Image Pipeline
-    description: >
-      Python-based golden image pipeline replacing Packer for internal image builds.
-    highlights:
-      - Cut build times from about an hour to five minutes using Ubuntu cloud images and a thin customisation pass.
-      - Added pytest-based validation to make image builds faster and more reliable.
-    startDate: "2023-07"
-  - name: OpenConnect Docker Container
-    description: >
-      Dockerized AnyConnect VPN client with automated OTP support, multi-arch images, and
-      CI/CD publishing to three container registries.
-    url: https://github.com/aw1cks/openconnect
-    highlights:
-      - 131 GitHub stars, solving a common pain point for AnyConnect users.
-      - Multi-arch images (amd64 + arm64) built and published to Docker Hub, GHCR, and Quay.io via automated CI/CD.
-    startDate: "2021-06"
+      - Go
+      - Python
+      - Kotlin
+      - Shell
