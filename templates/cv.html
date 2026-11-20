@@ -1,35 +1,69 @@
-{% set cv = load_data(path=section.extra.resume_data) %} {% set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] %} {% set css_content = load_data(path="static/cv.css",
- format="plain") %} {% set accent_color = css_content | split(pat="--accent:") |
- nth(n=1) | split(pat=";") | first | trim %} {% set icon_location = load_data(path="static/icons/location.svg", format="plain") |
- replace(from="currentColor", to=accent_color) %} {% set icon_github = load_data(path="static/icons/github.svg", format="plain") |
- replace(from="currentColor", to=accent_color) %} {% set icon_email = load_data(path="static/icons/email.svg", format="plain") |
- replace(from="currentColor", to=accent_color) %} {% set icon_phone = load_data(path="static/icons/phone.svg", format="plain") |
- replace(from="currentColor", to=accent_color) %}
+{%- set cv = load_data(path=section.extra.resume_data) -%}
+{%- set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] -%}
+{#- WeasyPrint does not resolve CSS currentColor on inline SVGs -#}
+{%- set css_content = load_data(path="static/cv.css", format="plain") -%}
+{%- set accent_color = css_content | split(pat="--accent:") | nth(n=1) | split(pat=";") | first | trim -%}
+{%- set icon_location = load_data(path="static/icons/location.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
+{%- set icon_github = load_data(path="static/icons/github.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
+{%- set icon_email = load_data(path="static/icons/email.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
+{%- set icon_globe = load_data(path="static/icons/globe.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
+{%- set icon_phone = load_data(path="static/icons/phone.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="color-scheme" content="light dark" />
         <title>{{ cv.basics.name }} - CV</title>
+        <script>
+            try {
+                var t = localStorage.getItem("theme");
+                if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+            } catch (e) {}
+        </script>
         <link rel="stylesheet" href="cv.css" />
     </head>
     <body>
         <header class="cv-heading">
-            <h1 class="cv-name">{{ cv.basics.name }}</h1>
+            <div class="cv-heading-row">
+                <h1 class="cv-name">{{ cv.basics.name }}</h1>
+                <div class="cv-actions">
+                    <a class="pdf-download" href="cv.pdf" aria-label="Download CV as PDF">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        <span><span class="pdf-download-prefix">Download </span>PDF</span>
+                    </a>
+                    <button
+                        type="button"
+                        class="theme-toggle"
+                        id="theme-toggle"
+                        aria-label="Switch to dark mode"
+                        title="Switch to dark mode"
+                    >
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                    </button>
+                </div>
+            </div>
+            {% if cv.basics.label %}<p class="cv-label">{{ cv.basics.label }}</p>{% endif %}
             <div class="contacts">
                 <span class="contact-entry">
                     {{ icon_location | safe }}
-                    <span>{{ cv.basics.location.city }}, {{ cv.basics.location.countryCode
-                    }}</span>
+                    <span>{{ cv.basics.location.city }}, {{ cv.basics.location.countryCode }}</span>
                 </span>
-                <span class="contact-entry">
-                    {{ icon_github | safe }}
-                    <a
-                        href="{{ cv.basics.profiles[0].url }}"
-                        aria-label="GitHub profile: {{ cv.basics.profiles[0].username }}"
-                        title="GitHub: {{ cv.basics.profiles[0].username }}"
-                    >{{ cv.basics.profiles[0].username }}</a>
-                </span>
+                {% if cv.basics.profiles %}
+                    {% for profile in cv.basics.profiles %}
+                        {% if profile.network == "GitHub" %}
+                            <span class="contact-entry">
+                                {{ icon_github | safe }}
+                                <a
+                                    href="{{ profile.url }}"
+                                    aria-label="GitHub profile: {{ profile.username }}"
+                                    title="GitHub: {{ profile.username }}"
+                                >{{ profile.url | replace(from="https://", to="") }}</a>
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
                 <span class="contact-entry">
                     {{ icon_email | safe }}
                     <a href="mailto:{{ cv.basics.email }}">{{ cv.basics.email }}</a>
@@ -38,6 +72,12 @@
                     {{ icon_phone | safe }}
                     <a href="tel:{{ cv.basics.phone | replace(from=' ', to='') }}">{{ cv.basics.phone }}</a>
                 </span>
+                {% if cv.basics.url %}
+                    <span class="contact-entry contact-url">
+                        {{ icon_globe | safe }}
+                        <a href="{{ cv.basics.url }}">{{ cv.basics.url | replace(from="https://", to="") | replace(from="http://", to="") }}</a>
+                    </span>
+                {% endif %}
             </div>
         </header>
         <section class="cv-section">
@@ -48,79 +88,124 @@
             <h2 class="section-heading">Experience</h2>
             {% for job in cv.work %}
                 {% if loop.first %}
-                    <h3 class="company-name">{{ job.name }}</h3>
+                    <div class="company-group">
+                        <h3 class="company-name">{{ job.name }}</h3>
                 {% else %}
                     {% set prev_idx = loop.index0 - 1 %}
-                    {% if
-                        cv.work[prev_idx].name != job.name %}
+                    {% if cv.work[prev_idx].name != job.name %}
+                    </div>
+                    <div class="company-group">
                         <h3 class="company-name">{{ job.name }}</h3>
                     {% endif %}
                 {% endif %}
-                <div class="job">
-                    <div class="job-header">
-                        <strong class="job-title">{{ job.position }}</strong>
-                        <span class="job-dates">
-                            {%- set start_parts = job.startDate | split(pat="-") -%}
-                            {%- set start_month = start_parts[1] | int - 1 -%}
-                            {{ months[start_month] }} {{ start_parts[0] }} – {% if job.endDate %}{%- set end_parts = job.endDate | split(pat="-") -%}{%- set end_month = end_parts[1] | int - 1 -%}{{ months[end_month] }} {{ end_parts[0] }}{% else %}Present{% endif %}
-                        </span>
+                        <article class="job">
+                            <div class="job-header">
+                                <h4 class="job-title">{{ job.position }}</h4>
+                                <span class="job-dates">
+                                    {%- set start_parts = job.startDate | split(pat="-") -%}
+                                    {%- if start_parts | length > 1 -%}{{ months[start_parts[1] | int - 1] }} {% endif -%}{{ start_parts[0] }} – {% if job.endDate %}{%- set end_parts = job.endDate | split(pat="-") -%}{%- if end_parts | length > 1 -%}{{ months[end_parts[1] | int - 1] }} {% endif -%}{{ end_parts[0] }}{% else %}Present{% endif %}
+                                </span>
+                            </div>
+                            {% if job.highlights %}
+                                <ul class="job-highlights">
+                                    {% for highlight in job.highlights %}<li>{{ highlight }}</li>{% endfor %}
+                                </ul>
+                            {% endif %}
+                        </article>
+                {% if loop.last %}
                     </div>
-                    {% if job.highlights %}
-                        <ul class="job-highlights">
-                            {% for highlight in job.highlights %}<li>{{ highlight }}</li>{% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
+                {% endif %}
             {% endfor %}
         </section>
         {% if cv.projects %}
             <section class="cv-section">
-                <h2 class="section-heading">Selected Projects</h2>
+                <h2 class="section-heading">Selected Projects &amp; Open-Source</h2>
                 {% for project in cv.projects %}
-                    <div class="job">
-                        <div class="job-header">
-                            <strong class="job-title">{% if project.url %}<a href="{{ project.url }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</strong>
-                            {% if project.endDate or project.startDate %}
-                                <span class="separator">&mdash;</span>
-                                <span class="job-dates">
-                                    {% if project.startDate %}
+                    <article class="project">
+                        <div class="project-header">
+                            <h3 class="project-title">{% if project.url %}<a href="{{ project.url }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
+                            {% if project.keywords or project.endDate or project.startDate %}
+                                <span class="project-meta">
+                                    {%- if project.keywords %}{{ project.keywords | join(sep=" · ") }}{% if project.startDate or project.endDate %} · {% endif %}{% endif -%}
+                                    {%- if project.startDate -%}
                                         {%- set start_parts = project.startDate | split(pat="-") -%}
                                         {{ start_parts[0] }}
-                                    {% endif %}
-                                    {% if project.endDate %}
+                                    {%- endif -%}
+                                    {%- if project.endDate -%}
                                         {%- set end_parts = project.endDate | split(pat="-") -%}
                                         – {{ end_parts[0] }}
-                                    {% endif %}
+                                    {%- endif -%}
                                 </span>
                             {% endif %}
                         </div>
-                        {% if project.description %}<p class="job-summary">{{ project.description }}</p>{% endif %}
+                        {% if project.description %}<p class="project-summary">{{ project.description }}</p>{% endif %}
                         {% if project.highlights %}
-                            <ul class="job-highlights">
+                            <ul class="project-highlights">
                                 {% for highlight in project.highlights %}<li>{{ highlight }}</li>{% endfor %}
                             </ul>
                         {% endif %}
-                    </div>
+                    </article>
                 {% endfor %}
             </section>
         {% endif %}
         <section class="cv-section">
-            <h2 class="section-heading">Skills</h2>
-            {% for skill in cv.skills %}
-                <p class="skills-inline">
-                    <strong class="skill-name">{{ skill.name }}:</strong>
-                    <span class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</span>
-                </p>
-            {% endfor %}
-            <div class="skills-inline">
-                <strong class="skill-name">Certifications:</strong>
-                <span class="skill-keywords">
-                    {% for cert in cv.certificates %}
-                        {{ cert.name }}{% if cert.date %} ({{ cert.date | split(pat="-") | first }}){% endif %}
-                        {% if not loop.last %}&bull;{% endif %}
-                    {% endfor %}
-                </span>
-            </div>
+            <h2 class="section-heading">Technical Skills</h2>
+            <dl class="skills-list">
+                {% for skill in cv.skills %}
+                    <div class="skill-row">
+                        <dt class="skill-name">{{ skill.name }}:</dt>
+                        <dd class="skill-keywords">{{ skill.keywords | join(sep=", ") }}</dd>
+                    </div>
+                {% endfor %}
+                {% if cv.certificates %}
+                    {%- set_global has_active_cert = false -%}
+                    {%- for cert in cv.certificates -%}{%- if not cert.expired -%}{%- set_global has_active_cert = true -%}{%- endif -%}{%- endfor -%}
+                    <div class="skill-row">
+                        <dt class="skill-name">{% if has_active_cert %}Certifications{% else %}Previously certified{% endif %}:</dt>
+                        <dd class="skill-keywords">
+                            {%- for cert in cv.certificates -%}
+                                {{ cert.name }}{% if cert.date %} ({{ cert.date | split(pat="-") | first }}){% endif %}{% if not loop.last %}, {% endif %}
+                            {%- endfor -%}
+                        </dd>
+                    </div>
+                {% endif %}
+            </dl>
         </section>
+        <script>
+            (function () {
+                var root = document.documentElement;
+                var btn = document.getElementById("theme-toggle");
+                if (!btn) return;
+                var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+                function effectiveTheme() {
+                    var explicit = root.dataset.theme;
+                    if (explicit === "light" || explicit === "dark") return explicit;
+                    return mq && mq.matches ? "dark" : "light";
+                }
+                function syncButton() {
+                    var isDark = effectiveTheme() === "dark";
+                    var nextLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
+                    btn.setAttribute("aria-pressed", String(isDark));
+                    btn.setAttribute("aria-label", nextLabel);
+                    btn.setAttribute("title", nextLabel);
+                }
+                btn.addEventListener("click", function () {
+                    var next = effectiveTheme() === "dark" ? "light" : "dark";
+                    root.dataset.theme = next;
+                    try {
+                        localStorage.setItem("theme", next);
+                    } catch (e) {}
+                    syncButton();
+                });
+                if (mq) {
+                    var onChange = function () {
+                        if (!root.dataset.theme) syncButton();
+                    };
+                    if (mq.addEventListener) mq.addEventListener("change", onChange);
+                    else if (mq.addListener) mq.addListener(onChange);
+                }
+                syncButton();
+            })();
+        </script>
     </body>
 </html>
