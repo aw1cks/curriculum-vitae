@@ -155,6 +155,19 @@ projects:
       Linux LD_PRELOAD shim aligning glibc CPU-discovery interfaces (sched_getaffinity, sysconf,
       get_nprocs) with LXCFS container-visible CPU counts; built with a no_std core, fail-open
       fallbacks, ABI-level tests, and fuzzing.
+  - name: estus — Policy-Gated MCP Server for Linux Hosts
+    url: https://github.com/aw1cks/estus
+    keywords:
+      - Rust
+      - MCP
+      - SSH
+    startDate: "2026"
+    description: >
+      MCP server letting AI agents triage and change Linux hosts over the operator's own OpenSSH
+      through typed, tiered tools (observe/inspect/preview/change/exec) instead of a raw shell;
+      per-host strictest-wins policy, a reviewed catalog spanning systemd, network, kernel, and
+      packages, Ansible modules as offline-bundled typed tools, and write-locking on lost change
+      acknowledgements.
   - name: Keycloak — SPNEGO Mutual Authentication
     url: https://github.com/keycloak/keycloak/pull/51560
     keywords:
@@ -173,15 +186,6 @@ projects:
     description: >
       Fixed Serde Path decoding and request serialisation rejecting valid non-UTF-8 Unix filenames
       per the SFTP specification, uncovered via fuzz testing.
-  - name: Smallstep — Issuer Validity Enforcement
-    url: https://github.com/smallstep/certificates/pull/2820
-    keywords:
-      - Go
-      - Open contribution
-    startDate: "2026"
-    description: >
-      Proposed issuing-CA chain expiry clamping and warning propagation across X.509 issuance and
-      renewal, with regression coverage and a companion CLI PR.
 
 skills:
   - name: Systems & Compute
@@ -238,6 +242,7 @@ skills:
       - GPU scheduling (Sun Grid Engine)
       - vLLM
       - LiteLLM
+      - MCP
   - name: Programming
     keywords:
       - Rust
