@@ -1,13 +1,15 @@
 {%- set cv = load_data(path=section.extra.resume_data) -%}
 {%- set months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] -%}
-{#- WeasyPrint does not resolve CSS currentColor on inline SVGs -#}
+{#- WeasyPrint does not resolve CSS currentColor on inline SVGs, so icons get the token hex from the stylesheet -#}
 {%- set css_content = load_data(path="static/cv.css", format="plain") -%}
-{%- set accent_color = css_content | split(pat="--accent:") | nth(n=1) | split(pat=";") | first | trim -%}
-{%- set icon_location = load_data(path="static/icons/location.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
-{%- set icon_github = load_data(path="static/icons/github.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
-{%- set icon_email = load_data(path="static/icons/email.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
-{%- set icon_globe = load_data(path="static/icons/globe.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
-{%- set icon_phone = load_data(path="static/icons/phone.svg", format="plain") | replace(from="currentColor", to=accent_color) -%}
+{%- set link_color = css_content | split(pat="--cds-link-primary:") | nth(n=1) | split(pat=";") | first | trim -%}
+{%- set icon_color = css_content | split(pat="--cds-icon-primary:") | nth(n=1) | split(pat=";") | first | trim -%}
+{%- set icon_location = load_data(path="static/icons/location.svg", format="plain") | replace(from="currentColor", to=icon_color) -%}
+{%- set icon_github = load_data(path="static/icons/github.svg", format="plain") | replace(from="currentColor", to=link_color) -%}
+{%- set icon_email = load_data(path="static/icons/email.svg", format="plain") | replace(from="currentColor", to=link_color) -%}
+{%- set icon_globe = load_data(path="static/icons/globe.svg", format="plain") | replace(from="currentColor", to=link_color) -%}
+{%- set icon_phone = load_data(path="static/icons/phone.svg", format="plain") | replace(from="currentColor", to=link_color) -%}
+{%- set icon_launch = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="' ~ link_color ~ '" class="cds--link__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M13,14H3c-0.6,0-1-0.4-1-1V3c0-0.6,0.4-1,1-1h5v1H3v10h10V8h1v5C14,13.6,13.6,14,13,14z"/><path d="M10 1 10 2 13.3 2 9 6.3 9.7 7 14 2.7 14 6 15 6 15 1z"/></svg>' -%}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -21,6 +23,11 @@
                 if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
             } catch (e) {}
         </script>
+        <link rel="preload" href="fonts/IBMPlexSans-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="fonts/IBMPlexSans-SemiBold-Latin1.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="fonts/IBMPlexMono-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="fonts/IBMPlexMono-SemiBold-Latin1.woff2" as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href="fonts/IBMPlexSerif-Regular-Latin1.woff2" as="font" type="font/woff2" crossorigin />
         <link rel="stylesheet" href="cv.css" />
     </head>
     <body>
@@ -28,19 +35,18 @@
             <div class="cv-heading-row">
                 <h1 class="cv-name">{{ cv.basics.name }}</h1>
                 <div class="cv-actions">
-                    <a class="pdf-download" href="cv.pdf" aria-label="Download CV as PDF">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    <a class="cds--btn cds--btn--tertiary cds--btn--sm" href="cv.pdf" aria-label="Download CV as PDF">
                         <span><span class="pdf-download-prefix">Download </span>PDF</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cds--btn__icon" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M13 7 12.3 6.3 8.5 10.1 8.5 1 7.5 1 7.5 10.1 3.7 6.3 3 7 8 12z"/><path d="M13,12v2H3v-2H2v2l0,0c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1l0,0v-2H13z"/></svg>
                     </a>
                     <button
                         type="button"
-                        class="theme-toggle"
+                        class="cds--btn cds--btn--tertiary cds--btn--sm cds--btn--icon-only theme-toggle"
                         id="theme-toggle"
                         aria-label="Switch to dark mode"
-                        title="Switch to dark mode"
                     >
-                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cds--btn__icon icon-light" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M7.5 1H8.5V3.5H7.5z"/><path d="M10.8 3.4H13.3V4.4H10.8z" transform="rotate(-45 12.041 3.923)"/><path d="M12.5 7.5H15V8.5H12.5z"/><path d="M11.6 10.8H12.6V13.3H11.6z" transform="rotate(-45 12.075 12.04)"/><path d="M7.5 12.5H8.5V15H7.5z"/><path d="M2.7 11.6H5.2V12.6H2.7z" transform="rotate(-45 3.96 12.078)"/><path d="M1 7.5H3.5V8.5H1z"/><path d="M3.4 2.7H4.4V5.2H3.4z" transform="rotate(-45 3.925 3.961)"/><path d="M8,6c1.1,0,2,0.9,2,2s-0.9,2-2,2S6,9.1,6,8S6.9,6,8,6 M8,5C6.3,5,5,6.3,5,8s1.3,3,3,3s3-1.3,3-3S9.7,5,8,5z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="cds--btn__icon icon-asleep" aria-hidden="true" focusable="false" viewBox="0 0 16 16"><path d="M7.2,2.3c-1,4.4,1.7,8.7,6.1,9.8c0.1,0,0.1,0,0.2,0c-1.1,1.2-2.7,1.8-4.3,1.8c-0.1,0-0.2,0-0.2,0C5.6,13.8,3,11,3.2,7.7 C3.2,5.3,4.8,3.1,7.2,2.3 M8,1L8,1C4.1,1.6,1.5,5.3,2.1,9.1c0.6,3.3,3.4,5.8,6.8,5.9c0.1,0,0.2,0,0.3,0c2.3,0,4.4-1.1,5.8-3 c0.2-0.2,0.1-0.6-0.1-0.7c-0.1-0.1-0.2-0.1-0.3-0.1c-3.9-0.3-6.7-3.8-6.4-7.6C8.3,3,8.4,2.4,8.6,1.8c0.1-0.3,0-0.6-0.3-0.7 C8.1,1,8.1,1,8,1z"/></svg>
                     </button>
                 </div>
             </div>
@@ -53,30 +59,30 @@
                 {% if cv.basics.profiles %}
                     {% for profile in cv.basics.profiles %}
                         {% if profile.network == "GitHub" %}
-                            <span class="contact-entry">
+                            <a
+                                class="cds--link contact-entry"
+                                href="{{ profile.url }}"
+                                aria-label="GitHub profile: {{ profile.username }}"
+                            >
                                 {{ icon_github | safe }}
-                                <a
-                                    href="{{ profile.url }}"
-                                    aria-label="GitHub profile: {{ profile.username }}"
-                                    title="GitHub: {{ profile.username }}"
-                                >{{ profile.url | replace(from="https://", to="") }}</a>
-                            </span>
+                                {{ profile.url | replace(from="https://", to="") }}
+                            </a>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
-                <span class="contact-entry">
+                <a class="cds--link contact-entry" href="mailto:{{ cv.basics.email }}">
                     {{ icon_email | safe }}
-                    <a href="mailto:{{ cv.basics.email }}">{{ cv.basics.email }}</a>
-                </span>
-                <span class="contact-entry">
+                    {{ cv.basics.email }}
+                </a>
+                <a class="cds--link contact-entry" href="tel:{{ cv.basics.phone | replace(from=' ', to='') }}">
                     {{ icon_phone | safe }}
-                    <a href="tel:{{ cv.basics.phone | replace(from=' ', to='') }}">{{ cv.basics.phone }}</a>
-                </span>
+                    {{ cv.basics.phone }}
+                </a>
                 {% if cv.basics.url %}
-                    <span class="contact-entry contact-url">
+                    <a class="cds--link contact-entry contact-url" href="{{ cv.basics.url }}">
                         {{ icon_globe | safe }}
-                        <a href="{{ cv.basics.url }}">{{ cv.basics.url | replace(from="https://", to="") | replace(from="http://", to="") }}</a>
-                    </span>
+                        {{ cv.basics.url | replace(from="https://", to="") | replace(from="http://", to="") }}
+                    </a>
                 {% endif %}
             </div>
         </header>
@@ -103,7 +109,7 @@
                                 <h4 class="job-title">{{ job.position }}</h4>
                                 <span class="job-dates">
                                     {%- set start_parts = job.startDate | split(pat="-") -%}
-                                    {%- if start_parts | length > 1 -%}{{ months[start_parts[1] | int - 1] }} {% endif -%}{{ start_parts[0] }} – {% if job.endDate %}{%- set end_parts = job.endDate | split(pat="-") -%}{%- if end_parts | length > 1 -%}{{ months[end_parts[1] | int - 1] }} {% endif -%}{{ end_parts[0] }}{% else %}Present{% endif %}
+                                    {%- if start_parts | length > 1 -%}{{ months[start_parts[1] | int - 1] }} {% endif -%}{{ start_parts[0] }} – {% if job.endDate %}{%- set end_parts = job.endDate | split(pat="-") -%}{%- if end_parts | length > 1 -%}{{ months[end_parts[1] | int - 1] }} {% endif -%}{{ end_parts[0] }}{% else %}Present{% endif -%}
                                 </span>
                             </div>
                             {% if job.highlights %}
@@ -123,10 +129,21 @@
                 {% for project in cv.projects %}
                     <article class="project">
                         <div class="project-header">
-                            <h3 class="project-title">{% if project.url %}<a href="{{ project.url }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
-                            {% if project.keywords or project.endDate or project.startDate %}
-                                <span class="project-meta">
-                                    {%- if project.keywords %}{{ project.keywords | join(sep=" · ") }}{% if project.startDate or project.endDate %} · {% endif %}{% endif -%}
+                            <div class="project-heading">
+                                {#- The launch icon is glued to the last word so it never wraps onto a line of its own. -#}
+                                {%- set name_words = project.name | split(pat=" ") -%}
+                                <h3 class="project-title">{% if project.url %}<a class="cds--link" href="{{ project.url }}">{% for word in name_words %}{% if not loop.last %}{{ word }} {% endif %}{% endfor %}<span class="nowrap">{{ name_words | last }}{{ icon_launch | safe }}</span></a>{% else %}{{ project.name }}{% endif %}</h3>
+                                {% if project.keywords %}
+                                    <span class="project-tags">
+                                        {#- "Merged upstream" is the one status keyword; it gets the outline tag. -#}
+                                        {%- for keyword in project.keywords -%}
+                                            <span class="cds--tag cds--tag--sm {% if keyword == "Merged upstream" %}cds--tag--outline{% else %}cds--tag--cool-gray{% endif %}">{{ keyword }}</span>
+                                        {%- endfor -%}
+                                    </span>
+                                {% endif %}
+                            </div>
+                            {% if project.startDate or project.endDate %}
+                                <span class="project-years">
                                     {%- if project.startDate -%}
                                         {%- set start_parts = project.startDate | split(pat="-") -%}
                                         {{ start_parts[0] }}
@@ -185,9 +202,7 @@
                 function syncButton() {
                     var isDark = effectiveTheme() === "dark";
                     var nextLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
-                    btn.setAttribute("aria-pressed", String(isDark));
                     btn.setAttribute("aria-label", nextLabel);
-                    btn.setAttribute("title", nextLabel);
                 }
                 btn.addEventListener("click", function () {
                     var next = effectiveTheme() === "dark" ? "light" : "dark";

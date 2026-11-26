@@ -1,16 +1,88 @@
+/*
+ * IBM Carbon, CSS only. Tokens use Carbon's own custom-property names and
+ * values (--cds-*, as emitted by @carbon/styles), and the interactive pieces
+ * use Carbon component markup (cds--btn, cds--tag, cds--link). The rules below
+ * re-implement only the subset this page needs, so there is no Carbon runtime
+ * or Sass build; WeasyPrint renders the same stylesheet for the PDF.
+ *
+ * Colour: this block holds the tokens print needs, at Carbon g10 values. The
+ * screen block redeclares them, plus the screen-only component tokens, as
+ * light-dark(g10, g100); keep the light values in sync. The template reads the
+ * first --cds-link-primary and --cds-icon-primary values here to colour the
+ * inline icons (WeasyPrint cannot resolve currentColor inside inline SVG), so
+ * keep them plain hex values.
+ *
+ * Blue is reserved for things you can act on: links and buttons share Carbon's
+ * link-primary / button-tertiary blue (Blue 60, 5.0:1 on white; Blue 40 on
+ * g100, 7.7:1). Headings and non-link icons use text and icon tokens.
+ * --cv-teal is the one non-token colour, a custom token as Carbon's theming
+ * allows: palette Teal 70 / Teal 30 (7.7:1 / 10.6:1), for the company/role
+ * context, which no theme token covers. Every Carbon hue at a given step has
+ * the same contrast, so contrast comes from the step, not the hue.
+ *
+ * Type and spacing are Carbon tokens in rem. Print sets the root size so
+ * body-01 (0.875rem) lands at 9.2pt, which scales the whole layout from the
+ * 14px screen base to A4 in one step.
+ */
 :root {
-  --accent: #20349f;
-  --accent-muted: #33476b;
-  --fg: #1a1a1a;
-  --fg-muted: #475569;
-  --rule: #cbd5e1;
-  --link-underline: #94a3b8;
-  --bg: #f3f4f6;
-  --surface: #ffffff;
-  --surface-border: transparent;
-  --surface-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --icon-size: 14px;
+  --cds-text-primary: #161616;
+  --cds-text-secondary: #525252;
+  --cds-link-primary: #0f62fe;
+  --cds-icon-primary: #161616;
+  --cds-border-subtle: #e0e0e0;
+  --cds-border-inverse: #161616;
+  --cds-tag-background-cool-gray: #dde1e6;
+  --cds-tag-color-cool-gray: #343a3f;
+  --cv-teal: #005d5d;
+
+  /* Carbon productive type tokens (@carbon/type), only those used here. */
+  --cds-body-01-font-size: 0.875rem;
+  --cds-body-01-line-height: 1.42857;
+  --cds-body-01-letter-spacing: 0.16px;
+  --cds-body-compact-01-font-size: 0.875rem;
+  --cds-body-compact-01-line-height: 1.28572;
+  --cds-body-compact-01-letter-spacing: 0.16px;
+  --cds-body-02-font-size: 1rem;
+  --cds-body-02-line-height: 1.5;
+  --cds-label-01-font-size: 0.75rem;
+  --cds-label-01-line-height: 1.33333;
+  --cds-label-01-letter-spacing: 0.32px;
+  --cds-code-01-font-size: 0.75rem;
+  --cds-code-01-line-height: 1.33333;
+  --cds-code-01-letter-spacing: 0.32px;
+  --cds-heading-compact-01-font-size: 0.875rem;
+  --cds-heading-compact-01-font-weight: 600;
+  --cds-heading-compact-01-line-height: 1.28572;
+  --cds-heading-02-font-size: 1rem;
+  --cds-heading-02-font-weight: 600;
+  --cds-heading-02-line-height: 1.5;
+  --cds-heading-04-font-size: 1.75rem;
+  --cds-heading-05-font-size: 2rem;
+  --cds-heading-05-line-height: 1.25;
+
+  /* Carbon spacing scale (@carbon/layout). */
+  --cds-spacing-01: 0.125rem;
+  --cds-spacing-02: 0.25rem;
+  --cds-spacing-03: 0.5rem;
+  --cds-spacing-04: 0.75rem;
+  --cds-spacing-05: 1rem;
+  --cds-spacing-06: 1.5rem;
+  --cds-spacing-07: 2rem;
+  --cds-spacing-09: 3rem;
+  --cds-spacing-10: 4rem;
+
+  /* Plex is the design font; the fallbacks only matter if the web fonts
+     fail to load. */
+  --font-sans:
+    "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* Plex Sans Text and Plex Serif Text (a touch heavier than Regular) read
+     better at print sizes. They are not shipped as web fonts; screen uses
+     Regular, as Carbon does. */
+  --font-text: "IBM Plex Sans Text", var(--font-sans);
+  --font-serif: "IBM Plex Serif Text", "IBM Plex Serif", Georgia, Times, serif;
+  --font-mono:
+    "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 @page {
@@ -20,7 +92,7 @@
     content: counter(page) " / " counter(pages);
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 7.5pt;
-    color: var(--fg-muted);
+    color: var(--cds-text-secondary);
   }
 }
 
@@ -30,236 +102,158 @@
   box-sizing: border-box;
 }
 
+/*
+ * Three Plex voices: sans for content, mono for labels and data (name,
+ * section headings, dates), serif for the one first-person paragraph, after
+ * Carbon's Plex Serif quotation styles, at body-02 size so the PDF keeps its
+ * length. Type: body-01 for reading text, heading-02 for the label, company
+ * names and section headings, heading-compact-01 for role and project
+ * titles, code-01 for dates, label-01 for tags, body-compact-01 for contacts
+ * and buttons. The name uses heading-05 size at semibold (600) rather than
+ * Carbon's 400, to anchor it against the mono section headings.
+ */
 body {
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 10.5pt;
-  color: var(--fg);
-  line-height: 1.5;
+  font-family: var(--font-sans);
+  font-size: var(--cds-body-01-font-size);
+  line-height: var(--cds-body-01-line-height);
+  letter-spacing: var(--cds-body-01-letter-spacing);
+  color: var(--cds-text-primary);
 }
 
 a {
-  color: var(--fg);
+  color: inherit;
   text-decoration: none;
 }
 
-@media screen {
-  a {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-
-  a:focus-visible,
-  .pdf-download:focus-visible,
-  .theme-toggle:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-    border-radius: 2px;
-  }
-}
-
 .cv-heading {
-  margin-bottom: 0.55em;
+  margin-bottom: var(--cds-spacing-03);
 }
 
 .cv-heading-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75em;
+  gap: var(--cds-spacing-04);
 }
 
 .cv-name {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 24pt;
-  font-weight: 700;
-  color: var(--fg);
-  margin: 0;
   min-width: 0;
-  line-height: 1.05;
+  font-family: var(--font-mono);
+  font-size: var(--cds-heading-05-font-size);
+  font-weight: 600;
+  line-height: var(--cds-heading-05-line-height);
+  letter-spacing: 0;
 }
 
 .cv-label {
-  font-size: 11.5pt;
-  font-weight: 600;
-  color: var(--accent-muted);
-  margin: 0.25em 0 0.55em;
+  margin: var(--cds-spacing-02) 0 var(--cds-spacing-03);
+  font-size: var(--cds-heading-02-font-size);
+  font-weight: var(--cds-heading-02-font-weight);
+  line-height: var(--cds-heading-02-line-height);
+  letter-spacing: 0;
+  color: var(--cv-teal);
 }
 
 .cv-actions {
   display: inline-flex;
   align-items: center;
-  gap: 0.35em;
+  gap: var(--cds-spacing-03);
   flex-shrink: 0;
-}
-
-.pdf-download,
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35em;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 8.25pt;
-  font-weight: 500;
-  line-height: 1;
-  color: var(--fg-muted);
-  background: transparent;
-  text-decoration: none;
-  border: 1px solid var(--rule);
-  border-radius: 5px;
-  padding: 0.38em 0.65em;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease,
-    background-color 0.15s ease;
-}
-
-.theme-toggle {
-  border-color: transparent;
-  padding: 0.38em;
-}
-
-.pdf-download:hover,
-.theme-toggle:hover {
-  color: var(--accent);
-  border-color: var(--rule);
-  background-color: color-mix(in srgb, var(--accent) 8%, transparent);
-}
-
-.pdf-download:hover {
-  border-color: var(--accent);
-}
-.theme-toggle .icon-sun {
-  display: none;
-}
-
-.theme-toggle .icon-moon {
-  display: inline-block;
 }
 
 .contacts {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35em 1.25em;
+  gap: var(--cds-spacing-02) var(--cds-spacing-05);
 }
 
 .contact-entry {
   display: inline-flex;
   align-items: center;
-  gap: 0.3em;
+  gap: var(--cds-spacing-02);
   white-space: nowrap;
+  font-family: var(--font-text);
+  font-size: var(--cds-body-compact-01-font-size);
+  line-height: var(--cds-body-compact-01-line-height);
+  letter-spacing: var(--cds-body-compact-01-letter-spacing);
 }
 
+/* Carbon icons at their 16px size. Linked contacts carry their icon inside
+   the link, so it takes the link colour and is part of the target. */
 .contact-entry svg {
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: 1rem;
+  height: 1rem;
   flex-shrink: 0;
-  color: var(--accent);
-}
-
-.contact-entry span,
-.contact-entry a {
-  font-weight: 500;
-  font-size: 9.5pt;
-  color: var(--fg);
-  text-decoration: none;
-}
-
-@media screen {
-  .contact-url {
-    display: none;
-  }
-  .contact-entry svg[fill="none"] {
-    stroke: var(--accent);
-  }
-  .contact-entry svg:not([fill="none"]) {
-    fill: var(--accent);
-  }
-  .contact-entry a:hover {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
 }
 
 .cv-section {
-  margin-top: 1.15em;
+  margin-top: var(--cds-spacing-05);
 }
 
 .section-heading {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12pt;
-  font-weight: 700;
-  color: var(--accent);
+  margin: 0 0 var(--cds-spacing-03);
+  padding-bottom: var(--cds-spacing-01);
+  border-bottom: 1px solid var(--cds-border-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--cds-heading-02-font-size);
+  font-weight: var(--cds-heading-02-font-weight);
+  line-height: var(--cds-heading-02-line-height);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0 0 0.4em;
-  padding-bottom: 0.16em;
-  border-bottom: 1px solid var(--rule);
+  color: var(--cds-text-primary);
 }
 
 .summary {
-  font-size: inherit;
-  line-height: 1.48;
+  font-family: var(--font-serif);
+  font-size: var(--cds-body-02-font-size);
+  line-height: var(--cds-body-02-line-height);
+  letter-spacing: 0;
 }
 
-.summary,
 .skill-keywords,
 .project-summary,
 .job-highlights,
 .project-highlights {
-  font-family: "IBM Plex Sans Text", "IBM Plex Sans", sans-serif;
+  font-family: var(--font-text);
 }
 
-.skills-list {
-  margin: 0;
+.project-summary {
+  margin: var(--cds-spacing-01) 0;
 }
 
 .skill-row {
-  font-size: inherit;
-  line-height: 1.45;
-  margin: 0.28em 0;
+  margin: var(--cds-spacing-02) 0;
 }
 
+/* Run-in labels, not a grid or table: text extraction then reads
+   "Label: values" on one line, which ATS parsers handle more reliably. */
 .skill-name {
   display: inline;
-  color: var(--accent-muted);
-  font-weight: 700;
-  font-size: inherit;
-  margin-right: 0.35em;
+  margin-right: var(--cds-spacing-02);
+  font-weight: 600;
+  color: var(--cv-teal);
 }
 
 .skill-keywords {
   display: inline;
-  font-size: inherit;
-  margin: 0;
 }
 
 .company-group + .company-group {
-  margin-top: 1.05em;
+  margin-top: var(--cds-spacing-05);
 }
 
 .company-name {
-  font-size: 11.5pt;
-  font-weight: 700;
-  color: var(--accent-muted);
-  margin: 0 0 0.25em;
+  margin: 0 0 var(--cds-spacing-02);
+  font-size: var(--cds-heading-02-font-size);
+  font-weight: var(--cds-heading-02-font-weight);
+  line-height: var(--cds-heading-02-line-height);
+  letter-spacing: 0;
+  color: var(--cv-teal);
 }
 
 .job,
 .project {
-  margin-bottom: 0.5em;
-}
-
-.job + .job {
-  margin-top: 0.5em;
-}
-
-.project + .project {
-  margin-top: 0.65em;
+  margin-bottom: var(--cds-spacing-03);
 }
 
 .job-header,
@@ -267,201 +261,440 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 0.75em;
-  margin: 0 0 0.2em;
+  gap: var(--cds-spacing-04);
+  margin: 0 0 var(--cds-spacing-01);
 }
 
 .job-title,
 .project-title {
-  color: var(--fg);
-  font-size: 10.75pt;
-  font-weight: 700;
-}
-
-.project-title a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--link-underline);
-  text-underline-offset: 2px;
-}
-
-@media screen {
-  .project-title a:hover {
-    color: var(--accent);
-    text-decoration-color: var(--accent);
-  }
+  font-size: var(--cds-heading-compact-01-font-size);
+  font-weight: var(--cds-heading-compact-01-font-weight);
+  line-height: var(--cds-heading-compact-01-line-height);
 }
 
 .job-dates,
-.project-meta {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9pt;
-  font-weight: 500;
+.project-years {
+  font-family: var(--font-mono);
+  font-size: var(--cds-code-01-font-size);
+  line-height: var(--cds-code-01-line-height);
+  letter-spacing: var(--cds-code-01-letter-spacing);
+  color: var(--cds-text-secondary);
   white-space: nowrap;
 }
 
-.job-dates {
-  color: var(--accent-muted);
-  font-size: 9.25pt;
-  font-weight: 600;
+/* Tags travel with the title as its attributes; the year stands alone at the
+   end, so projects share the right-hand date column with jobs. Title and tags
+   are plain inline flow (WeasyPrint's nested flex wraps them apart), so tag
+   labels sit on the title baseline, which the header aligns with the year. */
+.project-heading {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.project-meta {
-  color: var(--fg-muted);
+.project-title {
+  display: inline;
 }
 
-.project-summary {
-  font-size: inherit;
-  margin: 0.15em 0;
-  line-height: 1.45;
+.nowrap {
+  white-space: nowrap;
+}
+
+.project-tags {
+  margin-inline-start: var(--cds-spacing-04);
+}
+
+.project-tags .cds--tag + .cds--tag {
+  margin-inline-start: var(--cds-spacing-02);
 }
 
 .job-highlights,
 .project-highlights {
   list-style: disc;
-  margin-left: 1.25em;
-  margin-top: 0.15em;
-  font-size: inherit;
+  margin: var(--cds-spacing-01) 0 0 var(--cds-spacing-05);
 }
 
 .job-highlights li,
 .project-highlights li {
-  margin-bottom: 0.24em;
-  line-height: 1.45;
+  margin-bottom: var(--cds-spacing-02);
+}
+
+/* Carbon link. Every link here is Carbon's standalone kind, which Carbon
+   leaves un-underlined; these keep the underline anyway, so links never rely
+   on colour alone, and follow Carbon's colours and states otherwise. The
+   trailing icon follows Carbon's link-with-icon spec: after the text, 0.5rem
+   gap, link colour. */
+.cds--link {
+  color: var(--cds-link-primary);
+  text-decoration: underline;
+  text-underline-offset: var(--cds-spacing-01);
+}
+
+.cds--link__icon {
+  width: 1rem;
+  height: 1rem;
+  margin-inline-start: var(--cds-spacing-03);
+  vertical-align: text-bottom;
+}
+
+/* Carbon tag, read-only, small (18px). Keywords are filled cool gray, which
+   sits with the blue/teal palette. Status ("Merged upstream") is Carbon's
+   outline tag (text-primary on the background, border-inverse edge): it
+   differs from keywords by shape as well as colour. */
+.cds--tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0 var(--cds-spacing-03);
+  border-radius: 1rem;
+  font-family: var(--font-text);
+  font-size: var(--cds-label-01-font-size);
+  line-height: var(--cds-label-01-line-height);
+  letter-spacing: var(--cds-label-01-letter-spacing);
+  white-space: nowrap;
+}
+
+.cds--tag--sm {
+  min-height: 1.125rem;
+}
+
+.cds--tag--cool-gray {
+  background-color: var(--cds-tag-background-cool-gray);
+  color: var(--cds-tag-color-cool-gray);
+}
+
+.cds--tag--outline {
+  padding: 0 calc(var(--cds-spacing-03) - 1px);
+  border: 1px solid var(--cds-border-inverse);
+  color: var(--cds-text-primary);
+}
+
+/* Self-hosted IBM Plex (IBM's official Latin1 woff2 splits; see flake.nix).
+   Screen only: the PDF is built with the same fonts from fontconfig. */
+@media screen {
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/IBMPlexSans-Regular-Latin1.woff2") format("woff2");
+    unicode-range:
+      U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+      U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+      U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("fonts/IBMPlexSans-SemiBold-Latin1.woff2") format("woff2");
+    unicode-range:
+      U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+      U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+      U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/IBMPlexMono-Regular-Latin1.woff2") format("woff2");
+    unicode-range:
+      U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+      U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+      U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url("fonts/IBMPlexMono-SemiBold-Latin1.woff2") format("woff2");
+    unicode-range:
+      U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+      U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+      U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Serif";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/IBMPlexSerif-Regular-Latin1.woff2") format("woff2");
+    unicode-range:
+      U+0020-007E, U+00A0-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC,
+      U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
+      U+2039-203A, U+2044, U+20AC, U+2122, U+2212, U+FB01-FB02;
+  }
 }
 
 @media screen {
+  /* light-dark(g10, g100). Light: the page is the g10 background and the CV
+     sheet is layer-01 (white), as a Carbon tile. Dark: the sheet stays on
+     the g100 background instead of rising to layer-01 (Gray 90), which lifts
+     every text colour by about a fifth (body 13.8:1 to 16.5:1); a
+     border-subtle-00 edge keeps the sheet visible. --cds-border-subtle is
+     Carbon's contextual border: -01 on the light layer-01 sheet, -00 on the
+     dark background sheet. */
   :root {
-    --bg: #f4f4f4;
-    --surface: #ffffff;
-    --surface-border: #e0e0e0;
-    --surface-shadow:
-      0 4px 12px -2px rgba(22, 22, 22, 0.07), 0 1px 3px rgba(22, 22, 22, 0.05);
-    --fg: #161616;
-    --fg-muted: #525252;
-    --accent: #0f62fe;
-    --accent-muted: #007d79;
-    --rule: #c6c6c6;
-    --link-underline: #8d8d8d;
-  }
-
-  html {
     color-scheme: light dark;
-    background-color: var(--bg);
+    --font-text: var(--font-sans);
+    --font-serif: "IBM Plex Serif", Georgia, Times, serif;
+    --cds-background: light-dark(#f4f4f4, #161616);
+    --cv-sheet: light-dark(#ffffff, #161616);
+    --cv-sheet-edge: light-dark(#ffffff, #393939);
+    --cds-text-primary: light-dark(#161616, #f4f4f4);
+    --cds-text-secondary: light-dark(#525252, #c6c6c6);
+    --cds-text-inverse: light-dark(#ffffff, #161616);
+    --cds-link-primary: light-dark(#0f62fe, #78a9ff);
+    --cds-link-primary-hover: light-dark(#0043ce, #a6c8ff);
+    --cds-icon-primary: light-dark(#161616, #f4f4f4);
+    --cds-border-subtle: light-dark(#e0e0e0, #393939);
+    --cds-border-inverse: light-dark(#161616, #f4f4f4);
+    --cds-focus: light-dark(#0f62fe, #ffffff);
+    --cds-focus-inset: light-dark(#ffffff, #161616);
+    --cds-background-inverse: light-dark(#393939, #f4f4f4);
+    --cds-button-tertiary: light-dark(#0f62fe, #ffffff);
+    --cds-button-tertiary-hover: light-dark(#0050e6, #f4f4f4);
+    --cds-button-tertiary-active: light-dark(#002d9c, #c6c6c6);
+    --cds-tag-background-cool-gray: light-dark(#dde1e6, #4d5358);
+    --cds-tag-color-cool-gray: light-dark(#343a3f, #dde1e6);
+    --cv-teal: light-dark(#005d5d, #3ddbd9);
   }
 
-  body {
-    width: min(22cm, calc(100% - 2rem));
-    margin: 2rem auto;
-    padding: 1.25cm 1.6cm;
-    background-color: var(--surface);
-    border: 1px solid var(--surface-border);
-    box-shadow: var(--surface-shadow);
-  }
-
-  html[data-theme="light"] {
+  :root[data-theme="light"] {
     color-scheme: light;
   }
 
-  html[data-theme="dark"] {
+  :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #161616;
-    --surface: #262626;
-    --surface-border: #393939;
-    --surface-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-    --fg: #f2f4f8;
-    --fg-muted: #a2a9b0;
-    --accent: #78a9ff;
-    --accent-muted: #08bdba;
-    --rule: #393939;
-    --link-underline: #525252;
   }
 
-  html[data-theme="dark"] .theme-toggle .icon-sun {
-    display: inline-block;
+  html {
+    background-color: var(--cds-background);
   }
 
-  html[data-theme="dark"] .theme-toggle .icon-moon {
+  /* 32px page margin (spacing-07), 48/64px sheet padding (spacing-09/10);
+     below the md breakpoint the sheet goes full-bleed. */
+  body {
+    width: min(22cm, calc(100% - 2 * var(--cds-spacing-07)));
+    margin: var(--cds-spacing-07) auto;
+    padding: var(--cds-spacing-09) var(--cds-spacing-10);
+    border: 1px solid var(--cv-sheet-edge);
+    background-color: var(--cv-sheet);
+  }
+
+  .cds--link {
+    outline: none;
+  }
+
+  .cds--link:hover {
+    color: var(--cds-link-primary-hover);
+  }
+
+  .cds--link:focus-visible {
+    outline: 1px solid var(--cds-focus);
+  }
+
+  .cds--link svg {
+    fill: currentColor;
+  }
+
+  .contact-entry:not(.cds--link) > svg {
+    fill: var(--cds-icon-primary);
+  }
+
+  /* Carbon button, small (32px). Carbon reserves a 64px end slot for the
+     icon, which makes a two-word button about 175px wide; here the icon
+     follows the label at the sm icon gap (0.5rem) with even 16px padding,
+     about 150px. */
+  .cds--btn {
+    position: relative;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: var(--cds-spacing-03);
+    min-height: 2rem;
+    padding: 0 calc(var(--cds-spacing-05) - 1px);
+    border: 1px solid transparent;
+    border-radius: 0;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: var(--cds-body-compact-01-font-size);
+    font-weight: 400;
+    line-height: var(--cds-body-compact-01-line-height);
+    letter-spacing: var(--cds-body-compact-01-letter-spacing);
+    text-align: start;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    transition:
+      background-color 70ms cubic-bezier(0, 0, 0.38, 0.9),
+      border-color 70ms cubic-bezier(0, 0, 0.38, 0.9),
+      box-shadow 70ms cubic-bezier(0, 0, 0.38, 0.9);
+  }
+
+  .cds--btn__icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  .cds--btn--tertiary {
+    border-color: var(--cds-button-tertiary);
+    color: var(--cds-button-tertiary);
+  }
+
+  .cds--btn--tertiary:hover {
+    background-color: var(--cds-button-tertiary-hover);
+    color: var(--cds-text-inverse);
+  }
+
+  .cds--btn--tertiary:focus-visible {
+    border-color: var(--cds-focus);
+    background-color: var(--cds-button-tertiary);
+    box-shadow:
+      inset 0 0 0 1px var(--cds-focus),
+      inset 0 0 0 2px var(--cds-focus-inset);
+    color: var(--cds-text-inverse);
+  }
+
+  .cds--btn--tertiary:active {
+    border-color: transparent;
+    background-color: var(--cds-button-tertiary-active);
+    color: var(--cds-text-inverse);
+  }
+
+  .cds--btn--icon-only {
+    justify-content: center;
+    width: 2rem;
+    padding: 0;
+  }
+
+  /* Carbon icon tooltip, bottom-end: inverse colours, body-compact-01,
+     0.5rem offset, 8x4 caret. The label is the button's aria-label, which
+     the theme script keeps current. */
+  .cds--btn--icon-only::before,
+  .cds--btn--icon-only::after {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--cds-background-inverse);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      opacity 110ms cubic-bezier(0, 0, 0.38, 0.9),
+      visibility 110ms;
+  }
+
+  .cds--btn--icon-only::before {
+    content: "";
+    top: calc(100% + var(--cds-spacing-03) - var(--cds-spacing-02));
+    right: calc(var(--cds-spacing-05) - var(--cds-spacing-02));
+    width: var(--cds-spacing-03);
+    height: var(--cds-spacing-02);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  }
+
+  .cds--btn--icon-only::after {
+    content: attr(aria-label);
+    top: calc(100% + var(--cds-spacing-03));
+    right: 0;
+    padding: var(--cds-spacing-01) var(--cds-spacing-05);
+    border-radius: 2px;
+    color: var(--cds-text-inverse);
+    font-size: var(--cds-body-compact-01-font-size);
+    line-height: var(--cds-body-compact-01-line-height);
+    letter-spacing: var(--cds-body-compact-01-letter-spacing);
+    white-space: nowrap;
+  }
+
+  .cds--btn--icon-only:is(:hover, :focus-visible)::before,
+  .cds--btn--icon-only:is(:hover, :focus-visible)::after {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 100ms;
+  }
+
+  /* Both icons share one grid cell; the one for the other scheme is drawn
+     transparent, so the swap follows the used colour scheme with no JS. */
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .theme-toggle svg {
+    grid-area: 1 / 1;
+  }
+
+  .theme-toggle .icon-light {
+    fill: light-dark(transparent, currentColor);
+  }
+
+  .theme-toggle .icon-asleep {
+    fill: light-dark(currentColor, transparent);
+  }
+
+  .contact-url {
     display: none;
   }
 
-  @media (prefers-color-scheme: dark) {
-    html:not([data-theme="light"]) {
-      color-scheme: dark;
-      --bg: #161616;
-      --surface: #262626;
-      --surface-border: #393939;
-      --surface-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
-      --fg: #f2f4f8;
-      --fg-muted: #a2a9b0;
-      --accent: #78a9ff;
-      --accent-muted: #08bdba;
-      --rule: #393939;
-      --link-underline: #525252;
-    }
-
-    html:not([data-theme="light"]) .theme-toggle .icon-sun {
-      display: inline-block;
-    }
-
-    html:not([data-theme="light"]) .theme-toggle .icon-moon {
-      display: none;
-    }
+  /* Better rag on the web: no one-word last lines, balanced headings. */
+  p,
+  li {
+    text-wrap: pretty;
   }
-  @media (max-width: 860px) {
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  /* Carbon md breakpoint (672px): below it the sheet is full-bleed with the
+     16px small-screen page margin. */
+  @media (max-width: 41.98rem) {
     body {
-      margin: 0;
       width: 100%;
-      border: none;
-      box-shadow: none;
-      padding: 1.5rem 1.25rem;
-      font-size: 10pt;
+      margin: 0;
+      padding: var(--cds-spacing-06) var(--cds-spacing-05);
+      border: 0;
     }
-  }
-
-  @media (max-width: 600px) {
     .cv-name {
-      font-size: 19pt;
-    }
-    .cv-label {
-      font-size: 10.5pt;
+      font-size: var(--cds-heading-04-font-size);
     }
     .contacts {
-      row-gap: 0.55em;
-    }
-    .theme-toggle {
-      padding: 0.5em;
-    }
-    .pdf-download {
-      padding: 0.45em 0.65em;
-    }
-    .section-heading {
-      font-size: 10.5pt;
-      letter-spacing: 0.04em;
-    }
-    .company-name {
-      font-size: 11pt;
-    }
-    .job-title,
-    .project-title {
-      font-size: 10.25pt;
+      row-gap: var(--cds-spacing-03);
     }
     .job-header,
     .project-header {
       flex-wrap: wrap;
-      gap: 0.15em 0.5em;
+      gap: var(--cds-spacing-01) var(--cds-spacing-03);
     }
     .job-dates,
-    .project-meta {
+    .project-years {
       flex-basis: 100%;
-      white-space: normal;
+    }
+    /* Narrow screens: tags get their own row instead of wrapping mid-line
+       with an indent. */
+    .project-tags {
+      display: block;
+      margin: var(--cds-spacing-02) 0 0;
     }
   }
 
-  @media (max-width: 420px) {
+  @media (max-width: 26.25rem) {
     .cv-heading-row {
       flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: var(--cds-spacing-03);
     }
     .pdf-download-prefix {
       display: none;
@@ -470,132 +703,76 @@ a {
 }
 
 @media print {
-  :root {
-    --icon-size: 11.5px;
-  }
-
+  /* 10.5pt root: body-01 (0.875rem) = 9.2pt, and every rem token scales with
+     it. */
   html {
+    font-size: 10.5pt;
     color-scheme: light;
   }
 
-  body {
-    font-size: 9.2pt;
-    line-height: 1.43;
-  }
-
-  .cv-heading {
-    margin-bottom: 0.55em;
+  /* Carbon's px tracking is tuned for 14px screen text; at A4 sizes it only
+     costs line breaks. */
+  body,
+  .contact-entry,
+  .job-dates,
+  .project-years,
+  .cds--tag {
+    letter-spacing: 0;
   }
 
   .cv-actions {
     display: none;
   }
 
-  .cv-name {
-    font-size: 22pt;
-    margin-bottom: 0.1em;
+  /* A4 rhythm: one spacing step tighter than screen. */
+  .cv-section,
+  .company-group + .company-group {
+    margin-top: var(--cds-spacing-04);
   }
 
-  .cv-label {
-    font-size: 10pt;
-    margin: 0 0 0.42em;
+  .job-highlights li,
+  .project-highlights li {
+    margin-bottom: var(--cds-spacing-01);
   }
 
-  .contacts {
-    gap: 0.25em 1.15em;
+  /* Serif at body-01 metrics on paper: body-02 would cost two lines and push
+     a job to a third page. */
+  .summary {
+    font-size: var(--cds-body-01-font-size);
+    line-height: var(--cds-body-01-line-height);
   }
 
-  .contact-entry span,
-  .contact-entry a {
-    font-size: 8.5pt;
+  /* WeasyPrint draws a bordered inline-flex box twice; inline-block with an
+     18px line box gives the same small tag. */
+  .cds--tag {
+    display: inline-block;
+    flex-shrink: 0;
+    line-height: 1.125rem;
   }
 
   .cv-section {
     break-inside: auto;
-    margin-top: 0.95em;
   }
 
-  .section-heading {
-    font-size: 11pt;
-    break-after: avoid;
-    margin: 0 0 0.32em;
-    padding-bottom: 0.15em;
-  }
-
-  .summary,
-  .skill-row {
-    font-size: 9.2pt;
-    line-height: 1.4;
-  }
-
-  .skill-row {
-    margin: 0.24em 0;
-    break-inside: avoid;
-  }
-
-  .company-group + .company-group {
-    margin-top: 1.05em;
-  }
-
-  .company-name {
-    break-after: avoid;
-    font-size: 10.4pt;
-    margin: 0 0 0.16em;
-  }
-
-  .job,
-  .project {
-    margin-bottom: 0.42em;
-    break-inside: avoid;
-  }
-
-  .job + .job {
-    margin-top: 0.4em;
-  }
-
-  .project + .project {
-    margin-top: 0.5em;
-  }
-
+  .section-heading,
+  .company-name,
   .job-header,
   .project-header {
     break-after: avoid;
-    margin: 0 0 0.14em;
   }
 
-  .job-title,
-  .project-title {
-    font-size: 9.75pt;
-  }
-
-  .job-dates {
-    font-size: 8.25pt;
-  }
-
-  .project-meta {
-    font-size: 8pt;
-  }
-
-  .project-summary {
-    font-size: 9.2pt;
-    margin: 0.12em 0 0.2em;
-    line-height: 1.4;
+  .skill-row,
+  .job,
+  .project,
+  .project-summary,
+  .job-highlights li,
+  .project-highlights li {
     break-inside: avoid;
   }
 
   .job-highlights,
   .project-highlights {
-    font-size: 9.2pt;
-    margin-top: 0.1em;
-    margin-left: 1.2em;
     orphans: 2;
     widows: 2;
-  }
-
-  .job-highlights li,
-  .project-highlights li {
-    margin-bottom: 0.22em;
-    line-height: 1.41;
-    break-inside: avoid;
   }
 }
