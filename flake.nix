@@ -35,6 +35,7 @@
             families = [
               "sans"
               "mono"
+              "serif"
             ];
           };
 
@@ -47,6 +48,44 @@
             </fontconfig>
           '';
 
+          # Web fonts: IBM's own pre-split woff2 files from the official npm
+          # packages, so the site serves exactly what IBM publishes (OFL 1.1,
+          # Reserved Font Name "Plex" stays valid because nothing is modified).
+          # Only the Latin1 split of the five faces the stylesheet uses is
+          # shipped. The PDF keeps using the nixpkgs fonts above.
+          plexSansNpm = pkgs.fetchurl {
+            url = "https://registry.npmjs.org/@ibm/plex-sans/-/plex-sans-1.1.0.tgz";
+            hash = "sha512-WPgvO6Yfj2w5YbhyAr1tv95RUz4LRJlqN+CmYvBglabXteufP1D1E9BABMde+ZIKdRbFJDoKF5eQzfhpnbgZcQ==";
+          };
+          plexMonoNpm = pkgs.fetchurl {
+            url = "https://registry.npmjs.org/@ibm/plex-mono/-/plex-mono-2.5.0.tgz";
+            hash = "sha512-STBJIPxPomOYPmBMO7z5TKPJUotAF9u3gAUumTqVgwgrAO+K4FRNh0MlhsoJjKhJKsMbBJR10/bk4inkj/wc1w==";
+          };
+          plexSerifNpm = pkgs.fetchurl {
+            url = "https://registry.npmjs.org/@ibm/plex-serif/-/plex-serif-2.0.0.tgz";
+            hash = "sha512-xVu9JsC18tBoQF2M6fofpsWrHj5a94saxlOZbYmXoC0E3UfjgS1JlibgrnaUJjnkLlEyCpMgI2PdhkDxijw0gA==";
+          };
+
+          webFonts = pkgs.runCommand "cv-web-fonts" { } ''
+            mkdir sans mono serif $out
+            tar -xzf ${plexSansNpm} -C sans --strip-components=1 package/fonts/split/woff2
+            tar -xzf ${plexMonoNpm} -C mono --strip-components=1 package/fonts/split/woff2
+            tar -xzf ${plexSerifNpm} -C serif --strip-components=1 package/fonts/split/woff2
+            install -m644 \
+              sans/fonts/split/woff2/IBMPlexSans-Regular-Latin1.woff2 \
+              sans/fonts/split/woff2/IBMPlexSans-SemiBold-Latin1.woff2 \
+              mono/fonts/split/woff2/IBMPlexMono-Regular-Latin1.woff2 \
+              mono/fonts/split/woff2/IBMPlexMono-SemiBold-Latin1.woff2 \
+              serif/fonts/split/woff2/IBMPlexSerif-Regular-Latin1.woff2 \
+              $out/
+            # OFL requires the licence to travel with the font files.
+            install -m644 sans/fonts/split/woff2/license.txt $out/OFL.txt
+          '';
+
+          # Zola copies static/ into public/, so the fonts are staged there
+          # before every `zola build` / `zola serve` (static/fonts is gitignored).
+          installWebFonts = "${pkgs.coreutils}/bin/install -Dm644 -t static/fonts ${webFonts}/*";
+
           cvPackage = pkgs.stdenv.mkDerivation {
             name = "cv";
             src = ./.;
@@ -57,6 +96,7 @@
             FONTCONFIG_FILE = toString fontConfig;
             SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
             buildPhase = ''
+              ${installWebFonts}
               zola build
               weasyprint public/index.html public/cv.pdf
             '';
@@ -119,6 +159,7 @@
                   chmod -R u+w source
                   cd source
 
+                  ${installWebFonts}
                   zola build
                   weasyprint public/index.html public/cv.pdf
                   pdftotext public/cv.pdf extracted.txt
@@ -154,6 +195,7 @@
               program = toString (
                 pkgs.writeShellScript "build-cv" ''
                   export FONTCONFIG_FILE=${fontConfig}
+                  ${installWebFonts}
                   ${pkgs.zola}/bin/zola build
                   ${pkgs.python3Packages.weasyprint}/bin/weasyprint public/index.html cv.pdf
                   echo "Built cv.pdf successfully."
@@ -165,6 +207,7 @@
               program = toString (
                 pkgs.writeShellScript "serve" ''
                   export FONTCONFIG_FILE=${fontConfig}
+                  ${installWebFonts}
                   ${pkgs.zola}/bin/zola serve --extra-watch-path cv.yaml --open
                 ''
               );
@@ -185,6 +228,7 @@
             FONTCONFIG_FILE = toString fontConfig;
 
             shellHook = ''
+              if [ -f config.toml ]; then ${installWebFonts}; fi
               echo "CV Development Environment"
               echo "Zola: $(zola --version)"
               echo "WeasyPrint: $(weasyprint --version)"
