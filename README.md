@@ -13,6 +13,7 @@ _Heavily inspired by / copied from [The Overengineered Resume](https://ktema.org
 - **Styling:** Standard CSS with paged media rules (`@page`) and responsive media queries styles the CV simultaneously for print (A4) and screens.
 - **PDF Generation:** [WeasyPrint](https://weasyprint.org/) renders the HTML/CSS into a deterministic, high-quality, ATS-parsable PDF.
 - **Reproducibility:** A [Nix](https://nixos.org/) flake guarantees a reproducible environment containing the exact versions of Zola, WeasyPrint, and the required IBM Plex fonts, removing any dependency on host-installed tools.
+- **Fonts:** IBM Plex in three voices: Sans for content, Mono for labels and dates, Serif for the profile. The PDF uses IBM Plex from nixpkgs via fontconfig. The web version self-hosts IBM's official Latin1 woff2 files, fetched from the `@ibm/plex-sans`, `@ibm/plex-mono`, and `@ibm/plex-serif` npm packages by the flake and staged into the gitignored `static/fonts/` before each `zola` run.
 - **CI/CD:** GitHub Actions automatically lints formatting (via `treefmt`), checks grammar/spelling (via `typos` and `LanguageTool`), builds the PDF, and deploys both the HTML web version and PDF to GitHub Pages.
 
 ## Local Development
